@@ -8,6 +8,7 @@ import Gym.Service.MemberService;
 import Gym.Service.MembershipService;
 import Gym.Service.PaymentService;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 // import Gym.Base.Person;
@@ -34,20 +35,25 @@ void main(String[] args) {
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
         Members Sombo   = new Members("Sombo",Gender.OTHER,20,"0982345");
-        // Members Test    = new Members("test", Gender.MALE,19 , "0987654321");
+        Members Sambath = new Members( "Sombath", Gender.MALE, 20, "09876543" );
 
-//         // assign plan through membership
-//         MembershipService membershipService= new MembershipService();
-//         Membership membership= new Membership(yuth,basic);
-        
-//     System.out.println(membership);
-// //        membershipService.listAll();
-//     PaymentService paymentService = new PaymentService();
-//     Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
-//     System.out.println(payment);
-    MemberService memberService  = new MemberService();
-    memberService.createMember(input);
-    memberService.listAll();
+
+        // assign plan through membership
+        MembershipService membershipService= new MembershipService();
+        Membership membership= new Membership(yuth,basic);
+    System.out.println(membership);
+
+    Membership membership1= membershipService.createMembership(Sambath, basic);
+    System.out.println(membership1);
+
+
+//        membershipService.listAll();
+    PaymentService paymentService = new PaymentService();
+    Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
+    System.out.println(payment);
+    Payment payment1 = paymentService.processPayment(membership1, 0.0f, PaymentMethod.KHQR);
+    System.out.println(payment1);
+
         input.close();
 
     }
