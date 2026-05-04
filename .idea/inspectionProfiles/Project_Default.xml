@@ -1,7 +1,11 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+<<<<<<< Updated upstream
     <inspection_tool class="EditorConfigSpaceInHeader" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="RestResourceMethodInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+=======
+    <inspection_tool class="PackageVisibleField" enabled="false" level="WARNING" enabled_by_default="false" />
+>>>>>>> Stashed changes
   </profile>
 </component>
