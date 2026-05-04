@@ -9,7 +9,7 @@ import Gym.Model.Members;
 public class Membership {
   private static int count=0;
   private String membershipId;
-  private String memID;
+  private Members members;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private MemberStatus status;
@@ -18,7 +18,7 @@ public class Membership {
   public Membership(Members member, MembershipPlan plan) {
     this.membershipId ="SUB-"+(++count);
     // this.member = member;
-    this.memID = member.getID();
+    this.members=member;
     this.plan=plan;
     this.startDate = LocalDateTime.now();
     this.endDate = LocalDateTime.now().plusMonths(plan.getDuration());
@@ -37,9 +37,10 @@ public class Membership {
   public MembershipPlan getPlan(){
     return plan;
   }
-  public String getMemID(){
-    return this.memID;
+  public Members getMember(){
+    return members;
   }
+
   public MemberStatus getStatus() {
     return status;
   }
@@ -51,12 +52,13 @@ public String toString() {
             ----------------------------------
             Membership ID   : %s
             Member ID       : %s
-            Plan ID         : %s
+            Member Name     : %s
+            Plan Name       : %s
             Start Date      : %s
             End Date        : %s
             Status          : %s
             ----------------------------------
-            """, membershipId, memID, plan.getPlan_ID(),startDate, endDate, status);
+            """, membershipId, this.members.getID(),this.members.getName(), plan.getName(),startDate, endDate, status);
 }
 
 }

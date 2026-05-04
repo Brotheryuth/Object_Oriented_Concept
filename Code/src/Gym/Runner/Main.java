@@ -34,20 +34,16 @@ void main(String[] args) {
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
         Members Sombo   = new Members("Sombo",Gender.OTHER,20,"0982345");
-        // Members Test    = new Members("test", Gender.MALE,19 , "0987654321");
 
-//         // assign plan through membership
-//         MembershipService membershipService= new MembershipService();
-//         Membership membership= new Membership(yuth,basic);
-        
-//     System.out.println(membership);
-// //        membershipService.listAll();
-//     PaymentService paymentService = new PaymentService();
-//     Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
-//     System.out.println(payment);
-    MemberService memberService  = new MemberService();
-    memberService.createMember(input);
-    memberService.listAll();
+        // assign plan through membership
+        MembershipService membershipService= new MembershipService();
+        Membership membership= new Membership(yuth,basic);
+    System.out.println(membership);
+//        membershipService.listAll();
+    PaymentService paymentService = new PaymentService();
+    Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
+    System.out.println(payment);
+
         input.close();
 
     }

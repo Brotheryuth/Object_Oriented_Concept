@@ -1,6 +1,6 @@
 package Gym.Entities;
 
-import java.util.UUID;
+
 public class MembershipPlan {
     private  static int count =0;
     private  String planName;
