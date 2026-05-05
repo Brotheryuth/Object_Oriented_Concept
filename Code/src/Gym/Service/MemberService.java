@@ -16,26 +16,26 @@ public class MemberService {
             new MembershipPlan("Annual", 59.99, 12)
     };
 
-    public Members createMember(Scanner input){
+    public Members createMember(Scanner input) {
         System.out.print("Enter Name                : ");
-        String name = input.nextLine().trim();     //
+        String name = input.nextLine().trim();
+
         System.out.print("Enter Age                 : ");
-        int age = input.nextInt();
-        input.nextLine();
-        System.out.print("Enter Gender   (MALE/FEMALE):"); String gender=input.nextLine().toUpperCase();
+        int age = Integer.parseInt(input.nextLine());
+
+        System.out.print("Enter Gender (MALE/FEMALE): ");
         Gender genderType;
-        try{
-            genderType=Gender.valueOf(gender);
+        try {
+            genderType = Gender.valueOf(input.nextLine().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid gender. Defaulting to MALE.");
+            genderType = Gender.MALE;
         }
-        catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Invalid input");
-        }
+
         System.out.print("Enter Phone Number        : ");
         String phoneNumber = input.nextLine().trim();
 
-
-
-        return new Members(name,genderType,age,phoneNumber);
+        return new Members(name, genderType, age, phoneNumber);
     }
     //add member func
     public void addMember(Members member){

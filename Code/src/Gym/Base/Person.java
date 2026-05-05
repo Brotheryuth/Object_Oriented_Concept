@@ -19,30 +19,40 @@ public abstract class Person {
         this.setAge(age);
     }
     //setter
-    protected void setName(String name){
-        if( name==null || name.isBlank()){
-            throw new IllegalArgumentException("Name cannont be empty");
+    protected void setName(String name) {
+        if (name == null || name.isBlank()) {
+            System.out.println("Invalid name. Setting default name: 'Unknown'");
+            this.name = "Unknown";
+            return;
         }
-        this.name=name;
-    } // (Staff newStaff) (String name)
-    protected  void  setGender(Gender gender){
-        if( gender ==null ){
-            throw new IllegalArgumentException("Invalid gender.");
-        }
-        this.gender=gender;
+        this.name = name;
+    }
 
-    }
-    protected void setAge(int age){
-        if (age<5 || age>100){
-            throw new IllegalArgumentException("Age must between 5 and 100");
+    protected void setGender(Gender gender) {
+        if (gender == null) {
+            System.out.println("Invalid gender. Setting default: MALE");
+            this.gender = Gender.MALE;
+            return;
         }
-        this.age=age;
+        this.gender = gender;
     }
-    protected  void setPhoneNumber(String phoneNumber){
-        if (phoneNumber==null || phoneNumber.isBlank()){
-            throw new IllegalArgumentException("Phone number cannot be null");
+
+    protected void setAge(int age) {
+        if (age < 5 || age > 100) {
+            System.out.println("Invalid age. Setting default: 18");
+            this.age = 18;
+            return;
         }
-        this.phoneNumber=phoneNumber;
+        this.age = age;
+    }
+
+    protected void setPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isBlank()) {
+            System.out.println("Invalid phone number. Setting default: 'N/A'");
+            this.phoneNumber = "N/A";
+            return;
+        }
+        this.phoneNumber = phoneNumber;
     }
     //Getter
     public String getName()       { return name; }

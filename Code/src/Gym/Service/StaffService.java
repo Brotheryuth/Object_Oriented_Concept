@@ -13,13 +13,13 @@ public class StaffService {
         System.out.print("Enter Name                  :"); String name= input.nextLine();
         System.out.print("Enter Age                   :"); int age = input.nextInt();
         input.nextLine();
-        System.out.print("Enter Gender   (MALE/FEMALE):"); String gender=input.nextLine().toUpperCase();
+        System.out.print("Enter Gender (MALE/FEMALE): ");
         Gender genderType;
-        try{
-            genderType=Gender.valueOf(gender);
-        }
-        catch (IllegalArgumentException e){
-           throw new IllegalArgumentException("Invalid input.");
+        try {
+            genderType = Gender.valueOf(input.nextLine().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid gender. Defaulting to MALE.");
+            genderType = Gender.MALE;
         }
         System.out.print("\n");
         System.out.print("Enter Phone Number          :"); String phoneNum= input.nextLine();

@@ -30,6 +30,8 @@ void main(String[] args) {
         MembershipPlan annual  = new MembershipPlan("annual ",90.0f, 12);
 
         //creating member
+
+
         Members yuth = new Members("yuth", Gender.MALE, 19,"0987654321");
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
@@ -42,6 +44,8 @@ void main(String[] args) {
     System.out.println(membership);
 
         Members Sar = new Members("Sar kboy", Gender.MALE, 30, "0987654321");
+        Members ok = new Members("", Gender.OTHER,-2,"09832");
+        System.out.println(ok);
 
         // assign plan through membership
         MembershipService membershipService= new MembershipService();
