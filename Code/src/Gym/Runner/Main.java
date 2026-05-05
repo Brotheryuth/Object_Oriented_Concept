@@ -34,11 +34,23 @@ void main(String[] args) {
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
         Members Sombo   = new Members("Sombo",Gender.OTHER,20,"0982345");
+<<<<<<< HEAD
 
         // assign plan through membership
         MembershipService membershipService= new MembershipService();
         Membership membership= new Membership(yuth,basic);
     System.out.println(membership);
+=======
+        Members Sar = new Members("Sar kboy", Gender.MALE, 30, "0987654321");
+
+        // assign plan through membership
+        MembershipService membershipService= new MembershipService();
+        Membership yuthSub= membershipService.createMembership(yuth,basic);
+        Membership thonsarSub= membershipService.createMembership(thonsar,annual);
+        Membership SarSub = membershipService.createMembership(Sar,basic);
+
+        membershipService.listAll();
+>>>>>>> 3a4e0d07065838ef41f454c9876382de4bbe5c9f
 //        membershipService.listAll();
     PaymentService paymentService = new PaymentService();
     Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
