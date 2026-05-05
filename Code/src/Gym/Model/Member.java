@@ -1,16 +1,13 @@
 package Gym.Model;
 
-import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
-import Gym.Enum.MemberStatus;
 import Gym.Base.Person;
-import java.util.Scanner;
 
-public class Members extends Person {
+public class Member extends Person {
 
     private static int count = 0;
     // constructor
-    public Members(String name, Gender gender, int age, String phoneNumber) {
+    public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
         super.ID =  "MEM-" + (++count);
     }

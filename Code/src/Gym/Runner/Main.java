@@ -1,3 +1,5 @@
+
+import Gym.Base.Person;
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
 import Gym.Entities.Payment;
@@ -24,6 +26,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutte
 void main(String[] args) {
         Scanner input = new Scanner(System.in);
+
         //  create membership plan template
         MembershipPlan basic = new MembershipPlan("Basic",15.0f, 1);
         MembershipPlan premium = new MembershipPlan("premium",60.0f, 6);
@@ -36,13 +39,6 @@ void main(String[] args) {
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
         Members Sombo   = new Members("Sombo",Gender.OTHER,20,"0982345");
-
-
-        // assign plan through membership
-        MembershipService membershipService= new MembershipService();
-        Membership membership= new Membership(yuth,basic);
-    System.out.println(membership);
-
         Members Sar = new Members("Sar kboy", Gender.MALE, 30, "0987654321");
         Members ok = new Members("", Gender.OTHER,-2,"09832");
         System.out.println(ok);
@@ -54,11 +50,16 @@ void main(String[] args) {
         Membership SarSub = membershipService.createMembership(Sar,basic);
 
         membershipService.listAll();
-
 //        membershipService.listAll();
-    PaymentService paymentService = new PaymentService();
-    Payment payment = paymentService.processPayment(membership,0.0f, PaymentMethod.KHQR);
-    System.out.println(payment);
+    // yuth ppay
+//        PaymentService paymentService = new PaymentService();
+//        Payment yuthPayment = paymentService.processPayment(yuthSub,0.0f, PaymentMethod.KHQR);
+//        System.out.println(yuthPayment);
+        // thonsar pay
+
+//        Payment thonsarPayment= paymentService.processPayment(thonsarSub,0.)
+
+
 
         input.close();
 

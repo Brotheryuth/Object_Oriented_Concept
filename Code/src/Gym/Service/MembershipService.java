@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
-import Gym.Model.Members;
+import Gym.Model.Member;
 
 public class MembershipService {
     ArrayList<Membership> membershipList= new ArrayList<>();
-    public Membership createMembership( Members member, MembershipPlan plan ){
+    public Membership createMembership(Member member, MembershipPlan plan ){
         Membership membership=new Membership(member, plan);
         membershipList.add(membership);
         return membership;

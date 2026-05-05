@@ -1,8 +1,8 @@
+package Gym.Runner;
 
 import Gym.Entities.Membership;
 import Gym.Enum.PaymentMethod;
-import Gym.Model.Members;
-import Gym.Model.Staff;
+import Gym.Model.Member;
 import Gym.Service.MemberService;
 import Gym.Service.MembershipService;
 import Gym.Service.PaymentService;
@@ -56,7 +56,7 @@ public class GymManagement {
             input.nextLine();
             switch (choice) {
                 case 1 -> {
-                    Members m = memberService.createMember(input);
+                    Member m = memberService.createMember(input);
                     memberService.addMember(m);
                 }
                 case 2 -> {
