@@ -13,7 +13,8 @@ public class Membership {
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private MemberStatus status;
-  private MembershipPlan plan;
+  private
+  plan;
   // constructor
   public Membership(Members member, MembershipPlan plan) {
     this.membershipId ="SUB-"+(++count);
