@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 import Gym.Base.Person;
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
@@ -9,32 +10,51 @@ import Gym.Model.Members;
 import Gym.Service.MemberService;
 import Gym.Service.MembershipService;
 import Gym.Service.PaymentService;
+=======
+package Gym.Runner;
+// import Gym.Entities.Membership;
+// import Gym.Entities.MembershipPlan;
+// import Gym.Entities.Payment;
+// import Gym.Enum.Gender;
+// import Gym.Enum.PaymentMethod;
+// import Gym.Model.Member;
+
+
+// import Gym.Service.PaymentService;
+>>>>>>> bcc9f47987239a729adb1fd88de470f361241f57
 
 import java.util.Scanner;
 
-// import Gym.Base.Person;
-// import Gym.Enum.Gender;
-// import Gym.Enum.MemberStatus;
-// import Gym.Enum.PaymentMethod;
-// import Gym.Service.PaymentService;
-// import Gym.Service.StaffService;
-// import Gym.Model.Members;
-// import Gym.Entities.MembershipPlan;
-// import Gym.Model.Staff;
-
+import Gym.Model.Admin;
+import Gym.Model.Member;
+import Gym.Enum.Gender;
+import Gym.Interface.Displayable;
+import Gym.Model.Staff;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutte
-void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+public class Main {
+        public static void main(String[] args) {
+                Scanner input = new Scanner(System.in);
+                // Member yuth = new Gym.Model.Member(null, null, 0, null);
+                // yuth.displayable();
+                // Staff vanda = new Staff(null, 0, null, null, null, 0.0);
+                // vanda.displayable();
 
-        //  create membership plan template
-        MembershipPlan basic = new MembershipPlan("Basic",15.0f, 1);
-        MembershipPlan premium = new MembershipPlan("premium",60.0f, 6);
-        MembershipPlan annual  = new MembershipPlan("annual ",90.0f, 12);
+                new GymManagement().run();
+                // ArrayList<Displayable> displayLis  = new ArrayList<>();
+                // Admin admin = new Admin(null, 22, null, null, 2000);
+                // displayLis.add(admin);
+                // Staff newStaff = new Staff("null", 19, Gender.FEMALE, "null", 1000.0);
+                // displayLis.add(newStaff);
+                // for( Displayable d : displayLis){
+                //         d.displayInfo();
+                // }
+      
 
-        //creating member
+                
 
 
+<<<<<<< HEAD
         Members yuth = new Members("yuth", Gender.MALE, 19,"0987654321");
         Members thonsar = new Members("Thonsar", Gender.MALE,20,"07654376");
         Members Sovan   = new Members("Sovan",Gender.OTHER,20,"09812345");
@@ -123,3 +143,10 @@ void main(String[] args) {
 //    System.out.println("Our gym name");
 //    System.out.println(GymManagement.gymName);
 //    new GymManagement().run(); // run menu to create and viewall
+=======
+                
+                input.close();
+        }
+
+}
+>>>>>>> bcc9f47987239a729adb1fd88de470f361241f57

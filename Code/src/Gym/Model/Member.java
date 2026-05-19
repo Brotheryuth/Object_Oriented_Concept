@@ -1,6 +1,7 @@
 package Gym.Model;
 
 import Gym.Enum.Gender;
+
 import Gym.Base.Person;
 
 public class Member extends Person {
@@ -28,7 +29,12 @@ public class Member extends Person {
         super.setPhoneNumber(phoneNumber);
     }
 
-
+    
+    @Override
+    public void displayInfo() {
+        System.out.println(this.toString());
+    }
+    
     @Override
     public String toString() {
 

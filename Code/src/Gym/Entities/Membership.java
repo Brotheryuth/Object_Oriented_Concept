@@ -1,64 +1,87 @@
 package Gym.Entities;
+
 import java.time.LocalDateTime;
 
 import Gym.Enum.MemberStatus;
+import Gym.Interface.Displayable;
 import Gym.Model.Member;
 
-
-public class Membership {
-  private static int count=0;
+public class Membership implements Displayable {
+  private static int count = 0;
   private String membershipId;
   private Member member;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private MemberStatus status;
+<<<<<<< HEAD
   private
   plan;
+=======
+  private MembershipPlan plan;
+
+>>>>>>> bcc9f47987239a729adb1fd88de470f361241f57
   // constructor
   public Membership(Member member, MembershipPlan plan) {
-    this.membershipId ="SUB-"+(++count);
+    this.membershipId = "SUB-" + (++count);
     // this.member = member;
-    this.member =member;
-    this.plan=plan;
+    this.member = member;
+    this.plan = plan;
     this.startDate = LocalDateTime.now();
     this.endDate = LocalDateTime.now().plusMonths(plan.getDuration());
-    this.status = MemberStatus.ACTIVE;
+    this.status = MemberStatus.INACTIVE;
   }
 
   // Getters and Setters
 
-  public String getSubcriptionID(){ return this.membershipId;}
+  public String getSubcriptionID() {
+    return this.membershipId;
+  }
+
+  public void setStatus(MemberStatus status) {
+    this.status = status;
+  }
+
   public LocalDateTime getStartDate() {
     return startDate;
   }
-  public LocalDateTime getEnDate(){
+
+  public LocalDateTime getEnDate() {
     return endDate;
   }
-  public MembershipPlan getPlan(){
+
+  public MembershipPlan getPlan() {
     return plan;
   }
-  public Member getMember(){
+
+  public Member getMember() {
     return member;
   }
 
   public MemberStatus getStatus() {
     return status;
   }
- @Override
-public String toString() {
+
+  @Override
+  public void displayInfo() {
+    System.out.println(this.toString());
+  }
+
+  @Override
+  public String toString() {
     return String.format("""
-            ----------------------------------
-                    MEMBERSHIP INFO
-            ----------------------------------
-            Membership ID   : %s
-            Member ID       : %s
-            Member Name     : %s
-            Plan Name       : %s
-            Start Date      : %s
-            End Date        : %s
-            Status          : %s
-            ----------------------------------
-            """, membershipId, this.member.getID(),this.member.getName(), plan.getName(),startDate, endDate, status);
-}
+        ----------------------------------
+                MEMBERSHIP INFO
+        ----------------------------------
+        Membership ID   : %s
+        Member ID       : %s
+        Member Name     : %s
+        Plan Name       : %s
+        Plan Price      : $%s
+        Start Date      : %s
+        End Date        : %s
+        Status          : %s
+        ----------------------------------
+        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(),plan.getPlanPrice(), startDate, endDate, status);
+  }
 
 }

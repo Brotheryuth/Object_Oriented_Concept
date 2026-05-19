@@ -1,8 +1,9 @@
 package Gym.Base;
 
 import Gym.Enum.Gender;
+import Gym.Interface.Displayable;
 
-public abstract class Person {
+public  class Person implements Displayable{
     protected String name;
     protected Gender gender;
     protected int age;
@@ -61,6 +62,12 @@ public abstract class Person {
     public String getPhoneNumber(){ return phoneNumber; }
     public String getID(){
         return this.ID;
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println(this.toString());
+        
     }
     @Override
     public String toString() {
