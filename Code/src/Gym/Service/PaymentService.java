@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class PaymentService implements Searchable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
-    public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod, double payAmount ){
-        Payment payment = new Payment(membership,discount,paymentMethod, payAmount );
+    public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
+        Payment payment = new Payment(membership,discount,paymentMethod);
         System.out.printf("Payment processed:%s\n",payment.getPaymentID());
         if (payment.getPaymentStatus().equals(Payment.PAID)) {
             payment.getMembership().setStatus(MemberStatus.ACTIVE);

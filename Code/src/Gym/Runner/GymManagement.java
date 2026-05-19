@@ -38,8 +38,8 @@ public class GymManagement {
         memberService.addMembership(minaMembership);
 
         // payment 
-        paymentService.processPayment(thonsaMembership, 0, PaymentMethod.KHQR, 19.99);
-        paymentService.processPayment(sovanMembership, 0, PaymentMethod.BYCASH, 59.99);
+        paymentService.processPayment(thonsaMembership, 0, PaymentMethod.KHQR);
+        paymentService.processPayment(sovanMembership, 0, PaymentMethod.BYCASH);
         memberService.listAll();
     }
     // public void run() {

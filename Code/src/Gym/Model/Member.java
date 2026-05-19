@@ -2,9 +2,16 @@ package Gym.Model;
 
 import Gym.Enum.Gender;
 
+import java.util.ArrayList;
+
 import Gym.Base.Person;
+import Gym.Entities.Membership;
+import Gym.Enum.MemberStatus;
 
 public class Member extends Person {
+    private ArrayList<Membership> memberships;
+    private MemberStatus memberStatus;
+
 
     private static int count = 0;
     // constructor
@@ -27,6 +34,23 @@ public class Member extends Person {
 
     public void setPhoneNumber(String phoneNumber) {
         super.setPhoneNumber(phoneNumber);
+    }
+
+    public void setMemberStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
+    }
+
+     public void displayMembershipHistory() {
+        System.out.println("\nMembership History for " + name + ":");
+
+        if (memberships.isEmpty()) {
+            System.out.println("No membership records yet.");
+            return;
+        }
+
+        for (Membership membership : memberships) {
+            membership.displayInfo();
+        }
     }
 
     

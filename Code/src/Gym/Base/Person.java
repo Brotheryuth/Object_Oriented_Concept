@@ -47,13 +47,11 @@ public  class Person implements Displayable{
         this.age = age;
     }
 
+    /**
+     * set phone number by using clean text
+     */
     protected void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.isBlank()) {
-            System.out.println("Invalid phone number. Setting default: 'N/A'");
-            this.phoneNumber = "N/A";
-            return;
-        }
-        this.phoneNumber = phoneNumber;
+            phoneNumber=cleanText(phoneNumber, "N/A");
     }
     //Getter
     public String getName()       { return name; }
@@ -62,6 +60,16 @@ public  class Person implements Displayable{
     public String getPhoneNumber(){ return phoneNumber; }
     public String getID(){
         return this.ID;
+    }
+    /**
+     * @param value a string text that we want to set
+     * @param defaultValue set to default value if it's null 
+     */
+    protected String cleanText(String value, String defaultValue){
+        if (value==null || value.trim().isEmpty()){
+            return defaultValue;
+        }
+        return value.trim();
     }
 
     @Override

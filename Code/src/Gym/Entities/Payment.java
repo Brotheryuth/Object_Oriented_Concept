@@ -18,40 +18,25 @@ public class Payment implements Displayable {
     //for payment status
     public static final String PAID = "PAID";
     public static final String FAILED="FAILED";
+    public static final String PENDING="PENDING";
     private String paymentStatus;
 
 
     
 
-    public Payment( Membership memShip, float discount , PaymentMethod method, double payAmount){
+    public Payment( Membership memShip, float discount , PaymentMethod method){
         this.paymentID="PM-"+(++count);
         this.membership=memShip;
         this.subcriptionID= memShip.getSubcriptionID();
         this.setDiscount(discount);
         this.setMethod(method);
         this.paymentDate=LocalDateTime.now();
-        this.setPayAmount(payAmount);
+        this.payAmount=memShip.getPlan().getPlanPrice();
         this.finalAmount= calculateFinalAmount();
+        paymentStatus=Payment.PENDING;
     }
 
     // accessor
-    /**
-     * set amount base on the the plan if success change paymentStatus to PAID
-     * @param payAmount 
-     */
-    public void setPayAmount(double payAmount) {
-        if (payAmount == membership.getPlan().getPlanPrice()) {
-            this.payAmount = payAmount; 
-            // paid 
-            paymentStatus=PAID;
-           
-        } else {
-            this.payAmount = 0;
-            System.out.println("Invalid amount. Expected: $" + membership.getPlan().getPlanPrice());
-            paymentStatus=FAILED;
-            
-        }
-    }
     public void setDiscount(float discount) {
         if (discount >= 0)
             this.discount = discount;
