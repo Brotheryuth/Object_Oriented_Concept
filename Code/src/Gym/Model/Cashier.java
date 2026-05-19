@@ -10,7 +10,7 @@ public class Cashier extends Staff {
     public Cashier(String name, int age, Gender gender,
                    String phoneNumber, Double salary, String shift) {
 
-        super(name, age, gender, phoneNumber, "Cashier", salary);
+        super(name, age, gender, phoneNumber, salary);
 
         super.ID = "CA" + (++count);
 
@@ -60,7 +60,6 @@ public class Cashier extends Staff {
                 getAge(),
                 getGender(),
                 getPhoneNumber(),
-                getRole(),
                 getSalary(),
                 this.shift
         );

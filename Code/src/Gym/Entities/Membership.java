@@ -13,13 +13,8 @@ public class Membership implements Displayable {
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private MemberStatus status;
-<<<<<<< HEAD
-  private
-  plan;
-=======
   private MembershipPlan plan;
 
->>>>>>> bcc9f47987239a729adb1fd88de470f361241f57
   // constructor
   public Membership(Member member, MembershipPlan plan) {
     this.membershipId = "SUB-" + (++count);
