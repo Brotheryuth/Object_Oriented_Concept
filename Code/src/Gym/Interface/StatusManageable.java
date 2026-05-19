@@ -2,7 +2,7 @@ package Gym.Interface;
 
 
 public interface StatusManageable {
-    boolean updateStatus();
+    boolean updateStatus(String statusText);
     String getStatus();
 
 }

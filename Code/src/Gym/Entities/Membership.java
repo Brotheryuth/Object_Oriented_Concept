@@ -1,18 +1,20 @@
 package Gym.Entities;
 
+import java.net.SocketTimeoutException;
 import java.time.LocalDateTime;
 
 import Gym.Enum.MemberStatus;
+import Gym.Enum.MembershipStatus;
 import Gym.Interface.Displayable;
 import Gym.Model.Member;
-
-public class Membership implements Displayable {
+import Gym.Interface.StatusManageable;
+public class Membership implements Displayable, StatusManageable {
   private static int count = 0;
   private String membershipId;
   private Member member;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
-  private MemberStatus status;
+  private MembershipStatus status;
   private MembershipPlan plan;
 
   // constructor
@@ -23,7 +25,7 @@ public class Membership implements Displayable {
     this.plan = plan;
     this.startDate = LocalDateTime.now();
     this.endDate = LocalDateTime.now().plusMonths(plan.getDuration());
-    this.status = MemberStatus.INACTIVE;
+    this.status = MembershipStatus.PENDING;
   }
 
   // Getters and Setters
@@ -32,7 +34,7 @@ public class Membership implements Displayable {
     return this.membershipId;
   }
 
-  public void setStatus(MemberStatus status) {
+  public void setStatus(MembershipStatus status) {
     this.status = status;
   }
 
@@ -52,10 +54,31 @@ public class Membership implements Displayable {
     return member;
   }
 
-  public MemberStatus getStatus() {
-    return status;
+  public String getStatus() {
+    return status.toString();
   }
+@Override
+public boolean updateStatus(String statusText) {
+  if (statusText == null || statusText.trim().isEmpty()){
+    System.out.println("Membership status cannot be empty.");
+    return false;
+  }
+  
+  try{
+    MembershipStatus newStatus = MembershipStatus.valueOf(statusText.trim().toUpperCase());
+    this.status = newStatus;
 
+    if (member != null && newStatus == MembershipStatus.ACTIVE){
+      member.setMemberStatus(MemberStatus.ACTIVE);
+    }
+    return true;
+  } catch (IllegalArgumentException e){
+    System.out.println("Invalid membership status: " + statusText);
+    return false;
+  }
+  
+}
+  
   @Override
   public void displayInfo() {
     System.out.println(this.toString());
