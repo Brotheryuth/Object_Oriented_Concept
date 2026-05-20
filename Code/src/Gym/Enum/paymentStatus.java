@@ -1,5 +1,5 @@
 package Gym.Enum;
 
-public enum paymentStatus {
+public enum PaymentStatus {
     PAID,PENDING,FAILED;
 }

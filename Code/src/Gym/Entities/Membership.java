@@ -28,6 +28,21 @@ public class Membership implements Displayable, StatusManageable {
     this.status = MembershipStatus.PENDING;
   }
 
+  public boolean activate(){
+    if (member == null){
+      System.out.println("Membership cannot be activated with a member.");
+      return false;
+    }
+    if (plan == null){
+      System.out.println("Membership cannot be activated without a plan.");
+      return false;
+    }
+    status = MembershipStatus.ACTIVE;
+    member.setMemberStatus(MemberStatus.ACTIVE);
+    return true;
+    
+  }
+
   // Getters and Setters
 
   public String getSubcriptionID() {
@@ -77,6 +92,13 @@ public boolean updateStatus(String statusText) {
     return false;
   }
   
+}
+
+public double calculateFee() {
+  if ( plan == null ){
+    return 0;
+  }
+  return plan.getPlanPrice();
 }
   
   @Override
