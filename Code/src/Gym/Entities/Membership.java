@@ -51,6 +51,11 @@ public class Membership implements Displayable, StatusManageable {
   public String getSubcriptionID() {
     return this.membershipId;
   }
+  
+
+  public String getMembershipId() {
+    return membershipId;
+  }
 
   public void setStatus(MembershipStatus status) {
     this.status = status;
