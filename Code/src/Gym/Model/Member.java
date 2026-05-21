@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import Gym.Base.Person;
 import Gym.Entities.Membership;
 import Gym.Enum.MemberStatus;
+import Gym.Enum.MembershipStatus;
 
 public class Member extends Person {
     private ArrayList<Membership> memberships;
@@ -39,6 +40,21 @@ public class Member extends Person {
 
     public void setMemberStatus(MemberStatus memberStatus) {
         this.memberStatus = memberStatus;
+    }
+
+    public void addMembership(Membership membership){
+        
+    }
+
+    public void addMember(Membership membership){
+        if( membership !=null || !memberships.contains(membership)){
+            memberships.add(membership);
+            
+            if(membership.getMembershipStatus() == MembershipStatus.ACTIVE){
+                this.memberStatus = MemberStatus.ACTIVE;
+                
+            }
+        }
     }
 
     /**

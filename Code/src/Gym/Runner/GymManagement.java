@@ -1,11 +1,13 @@
 package Gym.Runner;
 
 import Gym.Entities.Membership;
+import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
 import Gym.Enum.PaymentMethod;
 import Gym.Model.Member;
 import Gym.Model.Staff;
 import Gym.Service.MemberService;
+import Gym.Service.MembershipService;
 import Gym.Service.PaymentService;
 
 import java.util.Scanner;
@@ -14,6 +16,15 @@ public class GymManagement {
     public static final String gymName = "SEBA-FITNESS";
     private MemberService memberService = new MemberService();
     private PaymentService paymentService = new PaymentService();
+    private MembershipService membershipService = new MembershipService();
+    /**
+     * array of plan 
+     */
+        private MembershipPlan[] plans = {
+            new MembershipPlan("Basic", 19.99, 1),
+            new MembershipPlan("Premium", 39.99, 3),
+            new MembershipPlan("Annual", 59.99, 12)
+    };
 
     public GymManagement() {
         Staff currenStaff = new Staff("Yuth", 19, Gender.MALE, "Manager", 500.0);
@@ -23,25 +34,18 @@ public class GymManagement {
     public void run() {
 
         //  System.out.println("-----Add member------");
-        Member thonsar = new Member("thonsar", Gender.MALE, 20, "09832134");
-        Member mina = new Member("Minalyn", Gender.FEMALE, 18, "098765434");
-        Member sovan = new Member("Sovan", Gender.MALE, 20, "094321325");
-       
-        Membership thonsaMembership = new Membership(thonsar, memberService.getPlan()[0]);
-        Membership sovanMembership= new Membership(sovan, memberService.getPlan()[2]);
-        Membership minaMembership  = new Membership(mina, memberService.getPlan()[2]);
+        Member thonsar = memberService.createMember("thonsar", Gender.MALE, 20, "09832134");
+        
+        Member mina = memberService.createMember("Minalyn", Gender.FEMALE, 18, "098765434");
+        Member sovan =memberService.createMember("Sovan", Gender.MALE, 20, "094321325");
 
-
-        // add to service
-        memberService.addMembership(thonsaMembership);
-        memberService.addMembership(sovanMembership);
-        memberService.addMembership(minaMembership);
-
-        // payment 
-        paymentService.processPayment(thonsaMembership, 0, PaymentMethod.KHQR);
-        paymentService.processPayment(sovanMembership, 0, PaymentMethod.BYCASH);
+        Membership sovanMembership= membershipService.creatMembership(sovan, plans[1]);
+        paymentService.processPayment(sovanMembership, 0, PaymentMethod.KHQR);
         memberService.listAll();
+        membershipService.displayAllMemberships();
+        paymentService.listAll();
     }
+}
     // public void run() {
     // int choice = -1;
     // System.out.println("Welcome To " + gymName);
@@ -134,4 +138,3 @@ public class GymManagement {
     // } while (choice != 0);
     // }
 
-}

@@ -76,9 +76,15 @@ public class Membership implements Displayable, StatusManageable {
   public Member getMember() {
     return member;
   }
+  //return membership status 
+  public MembershipStatus getMembershipStatus(){
+    return this.status;
+  }
 
+
+  @Override
   public String getStatus() {
-    return status.toString();
+      return status.toString();
   }
 
   @Override
