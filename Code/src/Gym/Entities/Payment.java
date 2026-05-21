@@ -105,6 +105,7 @@ public class Payment implements Displayable, Payable {
             System.out.println("Payment failed: final amount must be greater than 0.");
             paymentStatus = PaymentStatus.FAILED;
         }   
+        //activate membership 
         boolean activated = membership.activate();
          if (!activated) {
             System.out.println("Payment failed: menbership cannot be activated.");
@@ -117,7 +118,7 @@ public class Payment implements Displayable, Payable {
 
      @Override
      public boolean isPaid() {
-        return paymentStatus == PaymentStatus.PAID;
+        return paymentStatus == PaymentStatus.PAID; // if theyre the same return true ( paid=paid)
      }
 
     
