@@ -51,7 +51,7 @@ public  class Person implements Displayable{
      * set phone number by using clean text
      */
     protected void setPhoneNumber(String phoneNumber) {
-            phoneNumber=cleanText(phoneNumber, "N/A");
+            this.phoneNumber=cleanText(phoneNumber, "N/A");
     }
     //Getter
     public String getName()       { return name; }
@@ -65,10 +65,9 @@ public  class Person implements Displayable{
      * @param value a string text that we want to set
      * @param defaultValue set to default value if it's null 
      */
-    protected String cleanText(String value, String defaultValue){
-        if (value==null || value.trim().isEmpty()){
+    protected String cleanText(String value, String defaultValue) {
+        if (value == null || value.trim().isEmpty())
             return defaultValue;
-        }
         return value.trim();
     }
 

@@ -12,13 +12,14 @@ public class Member extends Person {
     private ArrayList<Membership> memberships;
     private MemberStatus memberStatus;
 
-
     private static int count = 0;
+
     // constructor
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
-        super.ID =  "MEM-" + (++count);
+        super.ID = "MEM-" + (++count);
     }
+
     // setter
     public void setName(String name) {
         super.setName(name);
@@ -40,7 +41,10 @@ public class Member extends Person {
         this.memberStatus = memberStatus;
     }
 
-     public void displayMembershipHistory() {
+    /**
+     * Display all membership 
+     */
+    public void displayMembershipHistory() {
         System.out.println("\nMembership History for " + name + ":");
 
         if (memberships.isEmpty()) {
@@ -53,12 +57,11 @@ public class Member extends Person {
         }
     }
 
-    
     @Override
     public void displayInfo() {
         System.out.println(this.toString());
     }
-    
+
     @Override
     public String toString() {
 

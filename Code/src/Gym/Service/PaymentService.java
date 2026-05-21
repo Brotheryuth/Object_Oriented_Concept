@@ -3,7 +3,6 @@ package Gym.Service;
 import Gym.Entities.Membership;
 // import Gym.Entities.MembershipPlan;
 import Gym.Entities.Payment;
-import Gym.Enum.MemberStatus;
 import Gym.Enum.PaymentMethod;
 // import Gym.Model.Members;
 import Gym.Interface.Searchable;
@@ -14,15 +13,15 @@ public class PaymentService implements Searchable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
     public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
         Payment payment = new Payment(membership,discount,paymentMethod);
-        System.out.printf("Payment processed:%s\n",payment.getPaymentID());
-        if (payment.getPaymentStatus().equals(Payment.PAID)) {
-           
+        boolean paid = payment.pay();
+        //check if it's paid 
+        if(paid){
             paymentList.add(payment);
+            System.out.println("Payment successful");
             return payment;
         }
-        else{
+            System.out.println("Paymennt failed");
             return null;
-        }
     }
     //search payment by id
     
