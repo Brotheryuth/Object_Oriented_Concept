@@ -93,7 +93,7 @@ public class Membership implements Displayable, StatusManageable {
       System.out.println("Membership status cannot be empty.");
       return false;
     }
-
+//
     try {
       MembershipStatus newStatus = MembershipStatus.valueOf(statusText.trim().toUpperCase());
       this.status = newStatus;

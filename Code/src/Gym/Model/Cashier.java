@@ -1,6 +1,7 @@
 package Gym.Model;
 
 import Gym.Enum.Gender;
+import Gym.Runner.GymManagement;
 
 public class Cashier extends Staff {
     private static int count = 0;
@@ -25,6 +26,14 @@ public class Cashier extends Staff {
     // Getter
     public String getShift() {
         return shift;
+    }
+
+    @Override
+    public boolean can(String action) {
+        if(action.equals(GymManagement.PROCESS_PAYMENT)){
+            return true;
+        }
+        return false;
     }
 
     // Setter
@@ -64,5 +73,7 @@ public class Cashier extends Staff {
             super.getPhoneNumber(),
             super.getHirDate()
         );
+
     }
+    
 }

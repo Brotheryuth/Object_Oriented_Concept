@@ -19,14 +19,10 @@ public class GymManagement {
     /**
      * options
      */
-    public static final String addStaff="Add Staff";
-    public static final String addMember = "Add Member";
-    public static final String removeMember = "Remove Member";
-    public static final String addMembership = "Add Membership";
-    public static final String removeMembership = "Remove Membership";
-    public static final String manageStaff = "Manage Staff";
-    public static final String doPayment = "Do Payment";
-    public static final String viewMember = "View Member";
+    public static final String ADD_MEMBER    = "add member";
+    public static final String VIEW_MEMBER   = "view member";
+    public static final String PROCESS_PAYMENT = "process payment";
+    public static final String ADD_STAFF     = "add staff";
     
 
     public static final String gymName = "SEBA-FITNESS";
@@ -45,32 +41,19 @@ public class GymManagement {
             new MembershipPlan("Premium", 39.99, 3),
             new MembershipPlan("Annual", 59.99, 12)
     };
-
+    
+    // constructor
     public GymManagement() {
         memberService = new MemberService();
         membershipService=new MembershipService();
         paymentService= new PaymentService();
         // initialize staffs list before using it
         staffs = new ArrayList<>();
-        Staff currenStaff = new Staff("Yuth", 19, Gender.MALE, "Manager", 500.0,"87654321");
+        Admin currenStaff = new Admin("Yuth", 19, Gender.MALE, "Manager", 500.0,"87654321");
         System.out.println("Current staff       :" + currenStaff.getName());
        
     }
     public void run() {
-
-        //  System.out.println("-----Add member------");
-        Member thonsar = memberService.createMember("thonsar", Gender.MALE, 20, "09832134");
-        
-        Member mina = memberService.createMember("Minalyn", Gender.FEMALE, 18, "098765434");
-        Member sovan =memberService.createMember("Sovan", Gender.MALE, 20, "094321325");
-
-        Membership sovanMembership= membershipService.creatMembership(sovan, plans[1]);
-
-        Admin admin  = new Admin("Yuth", 19, Gender.MALE, "0987654321", 500, "12345");
-        Cashier cashier = new Cashier("kiko", 19, Gender.FEMALE, "0987654321", 500.0, "Night", "1111");
-        staffs.add(admin);
-        staffs.add(cashier);
-        listAllStaff();
     }
     /**
      * login user by role 
@@ -83,12 +66,27 @@ public class GymManagement {
         for (Staff staff : staffs) {
             if(staff.equals(temp)){
                 loginStaff=staff;
-                System.out.println("Login Successful");
+                System.out.println("Login Successful:"+staff.getName());
                 return;
             }
         }
         System.out.println("Login failed");
     }
+
+    /**
+     * Add member  
+     */
+    public void addMember(){
+        if(loginStaff==null || !loginStaff.can(ADD_MEMBER)){
+            System.out.println("Access denied!");
+            return;
+        }
+
+    }
+
+    public MembershipPlan[] getPlan(){
+        return plans;
+    } 
 
     /**
      * list all staff 

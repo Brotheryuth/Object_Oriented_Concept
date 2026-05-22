@@ -46,14 +46,14 @@ public class Staff extends Person implements Role  {
         return this.salary;
     }
 
-    public String getID() {
-        return ID;
-    }
-
+    
     public LocalDate getHirDate(){
         return hirDate;
     }
-
+    
+    public String getID() {
+        return ID;
+    }
     protected void setSalary(Double salary) {
         if (salary > 0)
             this.salary = salary;

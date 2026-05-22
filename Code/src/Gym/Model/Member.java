@@ -19,6 +19,7 @@ public class Member extends Person {
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
         super.ID = "MEM-" + (++count);
+        memberships =  new ArrayList<>();
     }
 
     // setter
@@ -42,19 +43,17 @@ public class Member extends Person {
         this.memberStatus = memberStatus;
     }
 
-    public void addMembership(Membership membership){
-        
-    }
 
-    public void addMember(Membership membership){
+
+    public void addMembership(Membership membership){
         if( membership !=null || !memberships.contains(membership)){
             memberships.add(membership);
-            
+         
             if(membership.getMembershipStatus() == MembershipStatus.ACTIVE){
                 this.memberStatus = MemberStatus.ACTIVE;
-                
             }
         }
+       
     }
 
     /**

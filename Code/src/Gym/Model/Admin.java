@@ -16,8 +16,7 @@ public class Admin extends Staff {
 
   @Override
   public boolean can(String action) {
-      
-      return super.can(action);
+      return true;
   }
 
   @Override

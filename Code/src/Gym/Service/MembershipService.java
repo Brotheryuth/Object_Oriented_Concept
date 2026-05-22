@@ -58,9 +58,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
             }
         }
         return null;
-
     }
-
     @Override
     public void displayInfo() {
         System.out.printf("There are %s in the list",membershipsList.size());
