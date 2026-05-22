@@ -42,32 +42,27 @@ public class Cashier extends Staff {
     public void displayInfo() {
         System.out.println(this.toString());
     }
-
     // toString
     @Override
     public String toString() {
         return String.format("""
-                ----------------------------------
-                      CASHIER INFORMATION
-                ----------------------------------
-                Role            : %s
-                Salary          : $%.2f
-                Shift           : %s
-                Gender          : %s
-                Phone Number    : %s
-                Role            : %s
-                Salary          : $%.2f
-                Shift           : %s
-                ----------------------------------
-                """,
-                "Cashier",
-                getSalary(),
-                this.shift,
-                getAge(),
-                getGender(),
-                getPhoneNumber(),
-                getSalary(),
-                this.shift
+            ----------------------------------
+                  CASHIER INFORMATION
+            ----------------------------------
+            Role            : %s
+            Salary          : $%.2f
+            Shift           : %s
+            Gender          : %s
+            Phone Number    : %s
+            Hire Date       : %s
+            ----------------------------------
+            """,
+            "Cashier",
+            super.getSalary(),
+            this.shift,
+            super.getGender(),
+            super.getPhoneNumber(),
+            super.getHirDate()
         );
     }
 }

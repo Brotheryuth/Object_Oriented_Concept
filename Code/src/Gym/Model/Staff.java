@@ -29,7 +29,6 @@ public class Staff extends Person implements Role  {
         this.setPassword(password);
         this.hirDate=LocalDate.now();
     }
-
     /**
      * LOgin 
      * @param name
@@ -84,6 +83,16 @@ public class Staff extends Person implements Role  {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        Staff other = (Staff) obj;
+        if (password == null) {
+            if (other.password != null)
+                return false;
+        } else if (!password.equals(other.password))
+            return false;
+        return true;
+    }
 
     // display information 
     @Override

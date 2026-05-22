@@ -4,12 +4,15 @@ import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
 import Gym.Enum.PaymentMethod;
+import Gym.Model.Admin;
+import Gym.Model.Cashier;
 import Gym.Model.Member;
 import Gym.Model.Staff;
 import Gym.Service.MemberService;
 import Gym.Service.MembershipService;
 import Gym.Service.PaymentService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GymManagement {
@@ -22,12 +25,18 @@ public class GymManagement {
     public static final String addMembership = "Add Membership";
     public static final String removeMembership = "Remove Membership";
     public static final String manageStaff = "Manage Staff";
+    public static final String doPayment = "Do Payment";
+    public static final String viewMember = "View Member";
     
 
     public static final String gymName = "SEBA-FITNESS";
-    private MemberService memberService = new MemberService();
-    private PaymentService paymentService = new PaymentService();
-    private MembershipService membershipService = new MembershipService();
+    private MemberService memberService;
+    private PaymentService paymentService;
+    private MembershipService membershipService;
+
+    //array list 
+    public ArrayList<Staff> staffs;
+    public Staff loginStaff;
     /**
      * array of plan 
      */
@@ -38,6 +47,11 @@ public class GymManagement {
     };
 
     public GymManagement() {
+        memberService = new MemberService();
+        membershipService=new MembershipService();
+        paymentService= new PaymentService();
+        // initialize staffs list before using it
+        staffs = new ArrayList<>();
         Staff currenStaff = new Staff("Yuth", 19, Gender.MALE, "Manager", 500.0,"87654321");
         System.out.println("Current staff       :" + currenStaff.getName());
        
@@ -51,10 +65,42 @@ public class GymManagement {
         Member sovan =memberService.createMember("Sovan", Gender.MALE, 20, "094321325");
 
         Membership sovanMembership= membershipService.creatMembership(sovan, plans[1]);
-        paymentService.processPayment(sovanMembership, 0, PaymentMethod.KHQR);
-        memberService.listAll();
-        membershipService.displayAllMemberships();
-        paymentService.listAll();
+
+        Admin admin  = new Admin("Yuth", 19, Gender.MALE, "0987654321", 500, "12345");
+        Cashier cashier = new Cashier("kiko", 19, Gender.FEMALE, "0987654321", 500.0, "Night", "1111");
+        staffs.add(admin);
+        staffs.add(cashier);
+        listAllStaff();
+    }
+    /**
+     * login user by role 
+     * @param name
+     * @param password
+     */
+
+    public void login(String name, String password){
+        Staff temp = new Staff(name, password);
+        for (Staff staff : staffs) {
+            if(staff.equals(temp)){
+                loginStaff=staff;
+                System.out.println("Login Successful");
+                return;
+            }
+        }
+        System.out.println("Login failed");
+    }
+
+    /**
+     * list all staff 
+     */ 
+    public void listAllStaff(){
+        if(staffs.isEmpty()){
+            System.out.println("Staff is empty!");
+            return;
+        }
+        for (Staff staff : staffs) {
+            staff.displayInfo();
+        }
     }
 }
     // public void run() {
