@@ -4,13 +4,20 @@ import Gym.Enum.Gender;
 
 public class Admin extends Staff {
   private static int count =0;
-  public Admin(String name, int age, Gender gender, String phoneNumber, double salary) {
-    super(name, age, gender, phoneNumber,salary);
+  public Admin(String name, int age, Gender gender, String phoneNumber, double salary, String password) {
+    super(name, age, gender, phoneNumber,salary,password);
     super.ID = "ADMIN-" + (++count);
   }
 
-  public void setSalary(double salary){
-    super.setSalary(salary);
+  // Login constructor
+  public Admin(String name, String password) {
+    super(name, password);
+  }
+
+  @Override
+  public boolean can(String action) {
+      
+      return super.can(action);
   }
 
   @Override

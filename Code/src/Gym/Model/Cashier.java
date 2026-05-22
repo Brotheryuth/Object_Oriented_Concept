@@ -8,13 +8,18 @@ public class Cashier extends Staff {
 
     // Constructor
     public Cashier(String name, int age, Gender gender,
-                   String phoneNumber, Double salary, String shift) {
+                   String phoneNumber, Double salary, String shift, String password) {
 
-        super(name, age, gender, phoneNumber, salary);
+        super(name, age, gender, phoneNumber, salary,password);
 
         super.ID = "CA" + (++count);
 
         this.setShift(shift);
+    }
+
+    // Login constructor
+    public Cashier(String name, String password) {
+        super(name, password);
     }
 
     // Getter
@@ -45,9 +50,9 @@ public class Cashier extends Staff {
                 ----------------------------------
                       CASHIER INFORMATION
                 ----------------------------------
-                ID              : %s
-                Name            : %s
-                Age             : %d
+                Role            : %s
+                Salary          : $%.2f
+                Shift           : %s
                 Gender          : %s
                 Phone Number    : %s
                 Role            : %s
@@ -55,8 +60,9 @@ public class Cashier extends Staff {
                 Shift           : %s
                 ----------------------------------
                 """,
-                this.ID,
-                getName(),
+                "Cashier",
+                getSalary(),
+                this.shift,
                 getAge(),
                 getGender(),
                 getPhoneNumber(),

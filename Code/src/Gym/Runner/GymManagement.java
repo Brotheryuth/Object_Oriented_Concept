@@ -13,6 +13,17 @@ import Gym.Service.PaymentService;
 import java.util.Scanner;
 
 public class GymManagement {
+    /**
+     * options
+     */
+    public static final String addStaff="Add Staff";
+    public static final String addMember = "Add Member";
+    public static final String removeMember = "Remove Member";
+    public static final String addMembership = "Add Membership";
+    public static final String removeMembership = "Remove Membership";
+    public static final String manageStaff = "Manage Staff";
+    
+
     public static final String gymName = "SEBA-FITNESS";
     private MemberService memberService = new MemberService();
     private PaymentService paymentService = new PaymentService();
@@ -27,7 +38,7 @@ public class GymManagement {
     };
 
     public GymManagement() {
-        Staff currenStaff = new Staff("Yuth", 19, Gender.MALE, "Manager", 500.0);
+        Staff currenStaff = new Staff("Yuth", 19, Gender.MALE, "Manager", 500.0,"87654321");
         System.out.println("Current staff       :" + currenStaff.getName());
        
     }
