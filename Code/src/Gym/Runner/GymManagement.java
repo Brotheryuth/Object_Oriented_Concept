@@ -69,7 +69,7 @@ public class GymManagement {
         for (Staff staff : staffs) {
             if (staff.equals(temp)) {
                 loginStaff = staff;
-                System.out.println("Login Successful:" + staff.getName());
+                System.out.println("====Login successful by====\nName:" +staff.getName()+"\nRole:"+ whosLogin(loginStaff));
                 return;
             }
         }
@@ -85,6 +85,46 @@ public class GymManagement {
             return;
         }
 
+    }
+
+    /**
+     * a helper function to identify who's login 
+     * @param staff
+     * @return
+     */
+    public  String whosLogin( Staff staff){
+        if (isAdmin(staff)) {
+            return "Admin";
+        }
+        else if (isCashier(staff)){
+            return "Cashier";
+        }
+        else{
+            return "Unknown";
+        }
+    }
+
+    /**
+     * A boolean to check whether the obj is instance of admin or not 
+     * @param staff
+     * @return true if it's admi 
+     */
+    boolean isAdmin(Staff staff){
+        if( staff instanceof Admin){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * a boolean to check whether the obj is a cashier or not 
+     * @param staff
+     * @return true if that's a cahsier 
+     */
+    boolean isCashier(Staff staff){
+        if(staff instanceof Cashier){
+            return true;
+        }
+        return false;
     }
 
     public void addCashier(String name, int age, Gender gender,String phoneNumber, Double salary, String shift, String password){
