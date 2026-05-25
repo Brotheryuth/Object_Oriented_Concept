@@ -2,9 +2,11 @@ package Gym.Entities;
 
 import java.time.LocalDateTime;
 import Gym.Enum.PaymentMethod;
+import Gym.Enum.PaymentStatus;
 import Gym.Interface.Displayable;
+import Gym.Interface.Payable;
 
-public class Payment implements Displayable {
+public class Payment implements Displayable, Payable {
     private static int count = 0;
     private double payAmount; // base amount
     private String paymentID; //
@@ -13,45 +15,31 @@ public class Payment implements Displayable {
     private LocalDateTime paymentDate;
     private PaymentMethod method; // in what method ? KHQR ? credit card?
     private double finalAmount;
+    private double amount;
     private Membership membership;
 
     //for payment status
     public static final String PAID = "PAID";
     public static final String FAILED="FAILED";
-    private String paymentStatus;
+    public static final String PENDING="PENDING";
+    private PaymentStatus paymentStatus;
 
 
     
 
-    public Payment( Membership memShip, float discount , PaymentMethod method, double payAmount){
+    public Payment( Membership memShip, float discount , PaymentMethod method){
         this.paymentID="PM-"+(++count);
         this.membership=memShip;
         this.subcriptionID= memShip.getSubcriptionID();
         this.setDiscount(discount);
         this.setMethod(method);
         this.paymentDate=LocalDateTime.now();
-        this.setPayAmount(payAmount);
+        this.payAmount=memShip.getPlan().getPlanPrice();
         this.finalAmount= calculateFinalAmount();
+        paymentStatus= PaymentStatus.PENDING;
     }
 
     // accessor
-    /**
-     * set amount base on the the plan if success change paymentStatus to PAID
-     * @param payAmount 
-     */
-    public void setPayAmount(double payAmount) {
-        if (payAmount == membership.getPlan().getPlanPrice()) {
-            this.payAmount = payAmount; 
-            // paid 
-            paymentStatus=PAID;
-           
-        } else {
-            this.payAmount = 0;
-            System.out.println("Invalid amount. Expected: $" + membership.getPlan().getPlanPrice());
-            paymentStatus=FAILED;
-            
-        }
-    }
     public void setDiscount(float discount) {
         if (discount >= 0)
             this.discount = discount;
@@ -84,7 +72,7 @@ public class Payment implements Displayable {
         return membership;
     }
      
-    public String getPaymentStatus(){
+    public PaymentStatus getPaymentStatus(){
         return paymentStatus;
     }
    
@@ -105,6 +93,37 @@ public class Payment implements Displayable {
     }
 
     @Override
+    public boolean pay() {
+        if(membership == null){
+            System.out.println("Payment failed no membership connect");
+            paymentStatus = PaymentStatus.FAILED;     
+            return false;
+        }
+        amount = membership.calculateFee();
+        finalAmount = amount - discount;
+        if(finalAmount <= 0 ){
+            System.out.println("Payment failed: final amount must be greater than 0.");
+            paymentStatus = PaymentStatus.FAILED;
+        }   
+        //activate membership 
+        boolean activated = membership.activate();
+         if (!activated) {
+            System.out.println("Payment failed: menbership cannot be activated.");
+            paymentStatus = PaymentStatus.FAILED;
+            return false;
+         }
+         paymentStatus = PaymentStatus.PAID;
+         return true;
+     }
+
+     @Override
+     public boolean isPaid() {
+        return paymentStatus == PaymentStatus.PAID; // if theyre the same return true ( paid=paid)
+     }
+
+    
+
+    @Override
     public void displayInfo() {
         System.out.println(this.toString());
     }
@@ -119,7 +138,8 @@ public class Payment implements Displayable {
                 Discount        :%.0f%%
                 Method          :%s
                 Final Amount    :$%.2f
+                Paymentstatus   : %s
                 """.formatted(paymentID, subcriptionID, membership.getMember().getID(),
-                membership.getMember().getName(), discount * 100, method.name(), finalAmount);
+                membership.getMember().getName(), discount * 100, method.name(), finalAmount, paymentStatus);
     }
 }

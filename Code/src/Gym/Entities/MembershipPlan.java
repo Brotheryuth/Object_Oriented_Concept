@@ -12,9 +12,9 @@ public class MembershipPlan implements Displayable{
 // constructor
     public MembershipPlan(String planName , double planPrice , int duration  ){
         this.plan_ID ="PL-"+(++count);
-        this.planName=planName;
-        this.planPrice =planPrice;
-        this.duration = duration;
+        this.setPlanName(planName);
+        this.setPlanPrice(planPrice);
+        this.setDuration(duration);
     }
     // accessor
     public void setPlanPrice(Double planPrice){
@@ -23,10 +23,20 @@ public class MembershipPlan implements Displayable{
         }
     }
     public void setPlanName( String planName){
+        if(planName.isBlank()||planName.isEmpty()){
+            System.out.println("Plan name cannot be null.");
+            this.planName="UNKNOWN";
+            return;
+        }
         this.planName= planName;
+
     }
     public void setDuration( int duration){
-        this.duration=duration;
+        if(duration>0){
+            this.duration=duration;
+            return;
+        }
+        System.out.println("Invalid duration");
     }
 
 

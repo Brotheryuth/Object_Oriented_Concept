@@ -3,16 +3,18 @@ package Gym.Entities;
 import java.time.LocalDateTime;
 
 import Gym.Enum.MemberStatus;
+import Gym.Enum.MembershipStatus;
 import Gym.Interface.Displayable;
 import Gym.Model.Member;
+import Gym.Interface.StatusManageable;
 
-public class Membership implements Displayable {
+public class Membership implements Displayable, StatusManageable {
   private static int count = 0;
   private String membershipId;
   private Member member;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
-  private MemberStatus status;
+  private MembershipStatus status;
   private MembershipPlan plan;
 
   // constructor
@@ -23,7 +25,25 @@ public class Membership implements Displayable {
     this.plan = plan;
     this.startDate = LocalDateTime.now();
     this.endDate = LocalDateTime.now().plusMonths(plan.getDuration());
-    this.status = MemberStatus.INACTIVE;
+    this.status = MembershipStatus.PENDING;
+  }
+
+  /**
+   * activate the membership
+   */
+  public boolean activate() {
+    if (member == null) {
+      System.out.println("Membership cannot be activated with a member.");
+      return false;
+    }
+    if (plan == null) {
+      System.out.println("Membership cannot be activated without a plan.");
+      return false;
+    }
+    status = MembershipStatus.ACTIVE;
+    member.setMemberStatus(MemberStatus.ACTIVE);
+    return true;
+
   }
 
   // Getters and Setters
@@ -31,8 +51,13 @@ public class Membership implements Displayable {
   public String getSubcriptionID() {
     return this.membershipId;
   }
+  
 
-  public void setStatus(MemberStatus status) {
+  public String getMembershipId() {
+    return membershipId;
+  }
+
+  public void setStatus(MembershipStatus status) {
     this.status = status;
   }
 
@@ -51,9 +76,47 @@ public class Membership implements Displayable {
   public Member getMember() {
     return member;
   }
+  //return membership status 
+  public MembershipStatus getMembershipStatus(){
+    return this.status;
+  }
 
-  public MemberStatus getStatus() {
-    return status;
+
+  @Override
+  public String getStatus() {
+      return status.toString();
+  }
+
+  @Override
+  public boolean updateStatus(String statusText) {
+    if (statusText == null || statusText.trim().isEmpty()) {
+      System.out.println("Membership status cannot be empty.");
+      return false;
+    }
+//
+    try {
+      MembershipStatus newStatus = MembershipStatus.valueOf(statusText.trim().toUpperCase());
+      this.status = newStatus;
+
+      if (member != null && newStatus == MembershipStatus.ACTIVE) {
+        member.setMemberStatus(MemberStatus.ACTIVE);
+      }
+      return true;
+    } catch (IllegalArgumentException e) {
+      System.out.println("Invalid membership status: " + statusText);
+      return false;
+    }
+
+  }
+
+  /**
+   * just get the plan price
+   */
+  public double calculateFee() {
+    if (plan == null) {
+      return 0;
+    }
+    return plan.getPlanPrice();
   }
 
   @Override
@@ -76,7 +139,8 @@ public class Membership implements Displayable {
         End Date        : %s
         Status          : %s
         ----------------------------------
-        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(),plan.getPlanPrice(), startDate, endDate, status);
+        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(), startDate,
+        endDate, status);
   }
 
 }

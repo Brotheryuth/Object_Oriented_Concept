@@ -1,6 +1,7 @@
 package Gym.Model;
 
 import Gym.Enum.Gender;
+import Gym.Runner.GymManagement;
 
 public class Cashier extends Staff {
     private static int count = 0;
@@ -8,18 +9,31 @@ public class Cashier extends Staff {
 
     // Constructor
     public Cashier(String name, int age, Gender gender,
-                   String phoneNumber, Double salary, String shift) {
+                   String phoneNumber, Double salary, String shift, String password) {
 
-        super(name, age, gender, phoneNumber, "Cashier", salary);
+        super(name, age, gender, phoneNumber, salary,password);
 
         super.ID = "CA" + (++count);
 
         this.setShift(shift);
     }
 
+    // Login constructor
+    public Cashier(String name, String password) {
+        super(name, password);
+    }
+
     // Getter
     public String getShift() {
         return shift;
+    }
+
+    @Override
+    public boolean can(String action) {
+        if(action.equals(GymManagement.PROCESS_PAYMENT)){
+            return true;
+        }
+        return false;
     }
 
     // Setter
@@ -37,32 +51,29 @@ public class Cashier extends Staff {
     public void displayInfo() {
         System.out.println(this.toString());
     }
-
     // toString
     @Override
     public String toString() {
         return String.format("""
-                ----------------------------------
-                      CASHIER INFORMATION
-                ----------------------------------
-                ID              : %s
-                Name            : %s
-                Age             : %d
-                Gender          : %s
-                Phone Number    : %s
-                Role            : %s
-                Salary          : $%.2f
-                Shift           : %s
-                ----------------------------------
-                """,
-                this.ID,
-                getName(),
-                getAge(),
-                getGender(),
-                getPhoneNumber(),
-                getRole(),
-                getSalary(),
-                this.shift
+            ----------------------------------
+                  CASHIER INFORMATION
+            ----------------------------------
+            Role            : %s
+            Salary          : $%.2f
+            Shift           : %s
+            Gender          : %s
+            Phone Number    : %s
+            Hire Date       : %s
+            ----------------------------------
+            """,
+            "Cashier",
+            super.getSalary(),
+            this.shift,
+            super.getGender(),
+            super.getPhoneNumber(),
+            super.getHirDate()
         );
+
     }
+    
 }

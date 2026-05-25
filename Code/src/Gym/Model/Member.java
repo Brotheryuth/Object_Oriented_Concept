@@ -2,16 +2,26 @@ package Gym.Model;
 
 import Gym.Enum.Gender;
 
+import java.util.ArrayList;
+
 import Gym.Base.Person;
+import Gym.Entities.Membership;
+import Gym.Enum.MemberStatus;
+import Gym.Enum.MembershipStatus;
 
 public class Member extends Person {
+    private ArrayList<Membership> memberships;
+    private MemberStatus memberStatus;
 
     private static int count = 0;
+
     // constructor
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
-        super.ID =  "MEM-" + (++count);
+        super.ID = "MEM-" + (++count);
+        memberships =  new ArrayList<>();
     }
+
     // setter
     public void setName(String name) {
         super.setName(name);
@@ -29,12 +39,44 @@ public class Member extends Person {
         super.setPhoneNumber(phoneNumber);
     }
 
-    
+    public void setMemberStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
+    }
+
+
+
+    public void addMembership(Membership membership){
+        if( membership !=null || !memberships.contains(membership)){
+            memberships.add(membership);
+         
+            if(membership.getMembershipStatus() == MembershipStatus.ACTIVE){
+                this.memberStatus = MemberStatus.ACTIVE;
+            }
+        }
+       
+    }
+
+    /**
+     * Display all membership 
+     */
+    public void displayMembershipHistory() {
+        System.out.println("\nMembership History for " + name + ":");
+
+        if (memberships.isEmpty()) {
+            System.out.println("No membership records yet.");
+            return;
+        }
+
+        for (Membership membership : memberships) {
+            membership.displayInfo();
+        }
+    }
+
     @Override
     public void displayInfo() {
         System.out.println(this.toString());
     }
-    
+
     @Override
     public String toString() {
 
