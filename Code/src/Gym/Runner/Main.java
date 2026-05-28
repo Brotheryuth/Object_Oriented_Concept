@@ -17,12 +17,17 @@ import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
 import Gym.Model.Member;
+import Gym.Model.Staff;
 
 public class Main {
 
         public static void main(String[] args) {
                 Scanner input = new Scanner(System.in);                     
                 int op;
+
+                Staff memo = new Staff("yuth", 19, Gender.MALE,"098765432",500.0,"1234");
+                System.out.println(memo);
+
                 GymManagement gymManagement = new GymManagement();
                 do {
                         //main menu 

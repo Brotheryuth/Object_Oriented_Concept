@@ -106,18 +106,11 @@ public class Staff extends Person implements Role  {
                 ----------------------------------
                         STAFF INFORMATION
                 ----------------------------------
-                ID              : %s
-                Name            : %s
-                Age             : %d
-                Gender          : %s
-                Phone Number    : %s
+                %s
                 Salary          : $%.2f
                 ----------------------------------
-                """, this.ID,
-                super.getName(),
-                super.getAge(),
-                super.getGender(),
-                super.getPhoneNumber(),
+                """,
+                super.toString().stripTrailing(),
                 this.salary);
     }
     /**
