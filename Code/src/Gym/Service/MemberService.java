@@ -26,6 +26,17 @@ public class MemberService implements Searchable<Member> {
         memberList.add(newMember);
         return newMember;
     }
+    /**
+     * Another way to create member when we want quick login. we would use it when we dont want much information from customer 
+     * @param name
+     * @param phoneNumber
+     * @return
+     */
+    public Member createMember(String name, String phoneNumber){
+        Member newMember = new Member(name, null, 0, phoneNumber);
+        memberList.add(newMember);
+        return newMember;
+    }
 
 
 

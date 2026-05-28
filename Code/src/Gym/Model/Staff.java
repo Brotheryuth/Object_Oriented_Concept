@@ -36,7 +36,7 @@ public class Staff extends Person implements Role  {
      */
    
     public Staff(String name, String password){
-        super(name, 0, null, "");
+        super(name, 20, Gender.OTHER, "0987654321");
         this.setPassword(password);
     }
 

@@ -48,8 +48,10 @@ public class Member extends Person {
         return memberStatus;
     }
 
-
-
+    /**
+     * if member already create membership 
+     * @param membership
+     */
     public void addMembership(Membership membership){
         if( membership !=null || !memberships.contains(membership)){
             memberships.add(membership);
@@ -60,6 +62,7 @@ public class Member extends Person {
         }
        
     }
+
 
     /**
      * Display all membership 
