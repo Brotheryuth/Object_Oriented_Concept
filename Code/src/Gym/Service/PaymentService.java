@@ -54,5 +54,4 @@ public class PaymentService implements Searchable<Payment>,Displayable {
         for (Payment p : paymentList)
             p.displayInfo();
     }
-
 }

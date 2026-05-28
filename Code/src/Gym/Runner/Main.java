@@ -12,12 +12,16 @@ package Gym.Runner;
 
 import java.util.Scanner;
 
+import Gym.Base.Person;
+import Gym.Entities.Membership;
+import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
+import Gym.Model.Member;
 
 public class Main {
 
         public static void main(String[] args) {
-                Scanner input = new Scanner(System.in);
+                Scanner input = new Scanner(System.in);                     
                 int op;
                 GymManagement gymManagement = new GymManagement();
                 do {

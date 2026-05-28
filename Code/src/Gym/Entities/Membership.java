@@ -142,5 +142,5 @@ public class Membership implements Displayable, StatusManageable {
         """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(), startDate,
         endDate, status);
   }
-
+  
 }

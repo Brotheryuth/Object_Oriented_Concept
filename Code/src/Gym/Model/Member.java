@@ -18,8 +18,9 @@ public class Member extends Person {
     // constructor
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
-        super.ID = "MEM-" + (++count);
         memberships =  new ArrayList<>();
+        super.ID = "MEM-" + (++count);
+        this.memberStatus=MemberStatus.INACTIVE;
     }
 
     // setter
@@ -41,6 +42,10 @@ public class Member extends Person {
 
     public void setMemberStatus(MemberStatus memberStatus) {
         this.memberStatus = memberStatus;
+    }
+
+    public MemberStatus getMemberStatus(){
+        return memberStatus;
     }
 
 
@@ -89,11 +94,14 @@ public class Member extends Person {
                 Age             : %d
                 Gender          : %s
                 Phone Number    : %s
+                Member Status   : %s
                 %n""",
                 super.getID(),
                 super.getName(),
                 super.getAge(),
                 super.getGender(),
-                super.getPhoneNumber());
+                super.getPhoneNumber(),
+                this.getMemberStatus()
+            );
     }
 }
