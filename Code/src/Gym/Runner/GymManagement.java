@@ -35,9 +35,10 @@ public class GymManagement {
     /**
      * array of plan
      */
-    private MembershipPlan[] plans = {
+    private final MembershipPlan[] plans = {
             new MembershipPlan("Basic", 19.99, 1),
-            new MembershipPlan("Premium", 39.99, 3),
+            new MembershipPlan("Premium", 29.99, 3),
+            new MembershipPlan("Silver", 39.99, 6),
             new MembershipPlan("Annual", 59.99, 12)
     };
 

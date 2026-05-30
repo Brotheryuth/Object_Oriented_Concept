@@ -41,6 +41,9 @@ public class Main {
                 membershipService.displayAllMemberships();
                 paymentService.processPayment(memo, 0, PaymentMethod.BYCASH);
                 memberService.displayAllMember();
+                paymentService.listAll();
+
+               
                 //test work 
                 // new GymManagement().run(input);               
 

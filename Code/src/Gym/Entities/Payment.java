@@ -1,12 +1,15 @@
 package Gym.Entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import Gym.Enum.PaymentMethod;
 import Gym.Enum.PaymentStatus;
 import Gym.Interface.Displayable;
 import Gym.Interface.Payable;
 
 public class Payment implements Displayable, Payable {
+    private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyy hh:mm a");
     private static int count = 0;
     private double payAmount; // base amount
     private String paymentID; //
@@ -17,6 +20,7 @@ public class Payment implements Displayable, Payable {
     private double finalAmount;
     private double amount;
     private Membership membership;
+    private LocalDateTime createAt;
 
     //for payment status
     public static final String PAID = "PAID";
@@ -37,6 +41,7 @@ public class Payment implements Displayable, Payable {
         this.payAmount=memShip.getPlan().getPlanPrice();
         this.finalAmount= calculateFinalAmount();
         paymentStatus= PaymentStatus.PENDING;
+        this.createAt=LocalDateTime.now();
     }
 
     // accessor
@@ -121,7 +126,12 @@ public class Payment implements Displayable, Payable {
         return paymentStatus == PaymentStatus.PAID; // if theyre the same return true ( paid=paid)
      }
 
-    
+    public String cleanDateFormat ( LocalDateTime formatDate){
+    if(formatDate!=null){
+      return formatDate.format(cleanDate);
+    }
+    return null;
+  }
 
     @Override
     public void displayInfo() {
@@ -135,11 +145,13 @@ public class Payment implements Displayable, Payable {
                 Subscription ID : %s
                 Member ID       : %s
                 Member Name     : %s
-                Discount        :%.0f%%
-                Method          :%s
+                Discount        : %.0f%%
+                Method          : %s
                 Final Amount    :$%.2f
                 Paymentstatus   : %s
+                Create At       : %s
                 """.formatted(paymentID, subcriptionID, membership.getMember().getID(),
-                membership.getMember().getName(), discount * 100, method.name(), finalAmount, paymentStatus);
+                membership.getMember().getName(), discount * 100, method.name(), finalAmount, paymentStatus,this.cleanDateFormat(createAt))
+                ;
     }
 }

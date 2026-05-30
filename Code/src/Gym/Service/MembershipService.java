@@ -74,6 +74,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
 
     @Override
     public Membership searchById(String membehipId) {
+        System.out.println("Search Membership with the ID : "+membehipId);
         if (membehipId == null) {
             return null;
         }

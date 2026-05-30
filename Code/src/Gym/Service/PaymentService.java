@@ -12,8 +12,11 @@ import java.util.ArrayList;
 
 public class PaymentService implements Searchable<Payment>,Displayable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
+
     public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
+
         Payment payment = new Payment(membership,discount,paymentMethod);
+        
         boolean paid = payment.pay();
         //check if it's paid 
         if(paid){
