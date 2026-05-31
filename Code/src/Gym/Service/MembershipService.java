@@ -1,5 +1,6 @@
 package Gym.Service;
 
+
 import java.util.ArrayList;
 
 import Gym.Entities.Membership;
@@ -13,56 +14,25 @@ public class MembershipService implements Displayable, Searchable<Membership> {
 
     public MembershipService() {
         this.membershipsList = new ArrayList<>();
-    }
 
-    public Membership creatMembership(Member member, MembershipPlan plan) {
-        if (member == null) {
+    }
+    public Membership creatMembership(Member member, MembershipPlan plan ){
+        if( member ==null){
             System.out.println("Cannot create membership without a Member.");
             return null;
         }
-
-        if (plan == null) {
-            System.out.println("Cannot create membership without a plan.");
+        if(plan==null){
+            System.out.println("Cannot crearte membership without a plan");
             return null;
         }
-
         Membership tempMembership = new Membership(member, plan);
-        membershipsList.add(tempMembership);
+        membershipsList.add(tempMembership);  // added to list 
         member.addMembership(tempMembership);
 
         return tempMembership;
     }
 
-    // NEW METHOD
-    public Membership createMembership(String memberId, String planId,
-            MemberService memberService,
-            ArrayList<MembershipPlan> plans) {
-
-        // Find member
-        Member member = memberService.searchById(memberId);
-        if (member == null) {
-            System.out.println("Member not found: " + memberId);
-            return null;
-        }
-
-        // Find plan
-        MembershipPlan selectedPlan = null;
-        for (MembershipPlan plan : plans) {
-            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
-                selectedPlan = plan;
-                break;
-            }
-        }
-
-        if (selectedPlan == null) {
-            System.out.println("Plan not found: " + planId);
-            return null;
-        }
-
-        return creatMembership(member, selectedPlan);
-    }
-
-    // display all memberships
+    // display all member
     public void displayAllMemberships() {
         System.out.println("\n========== All Memberships ==========");
 
@@ -77,22 +47,20 @@ public class MembershipService implements Displayable, Searchable<Membership> {
     }
 
     @Override
-    public Membership searchById(String membershipId) {
-        if (membershipId == null) {
+    public Membership searchById(String membehipId) {
+        if (membehipId == null) {
             return null;
         }
-
         for (Membership membership : membershipsList) {
-            if (membership.getMembershipId().equalsIgnoreCase(membershipId.trim())) {
+
+            if (membership.getMembershipId().equalsIgnoreCase(membehipId.trim())) {
                 return membership;
             }
         }
-
         return null;
     }
-
     @Override
     public void displayInfo() {
-        System.out.printf("There are %s in the list", membershipsList.size());
+        System.out.printf("There are %s in the list",membershipsList.size());
     }
 }
