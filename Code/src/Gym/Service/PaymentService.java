@@ -27,6 +27,24 @@ public class PaymentService implements Searchable<Payment>,Displayable {
             System.out.println("Paymennt failed");
             return null;
     }
+
+    public Payment processPayment(Membership membership){
+        if (membership == null){
+            System.out.println("Membership cannot be null.");
+            return null;
+        }
+        return processPayment(membership, 0, PaymentMethod.BYCASH);
+    }
+
+    public Payment processPayment(Membership membership, PaymentMethod method){
+        if (membership == null){
+            System.out.println("Membership cannot be null.");
+            return null;
+        }
+        return processPayment(membership, 0, method);
+    }
+
+    public 
     //search payment by id
     @Override
     public Payment searchById(String id) {
