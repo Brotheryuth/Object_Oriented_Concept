@@ -41,23 +41,24 @@ public class PaymentService implements Searchable<Payment>,Displayable {
             System.out.println("Paymennt failed");
             return null;
     }
-    /**
-     *  if membership already exist in the system and they wanna renew it 
-     * @param membershipID
-     * @param discount
-     * @param method
-     * @return
-     */
-    public Payment processPayment(String membershipID, double discount, PaymentMethod method) {
-        Membership membership = membershipService.searchById(membershipID);
-        if (membership == null) {
-            System.out.println("Membership not found" + membershipID);
+
+    public Payment processPayment(Membership membership){
+        if (membership == null){
+            System.out.println("Membership cannot be null.");
+            return null;
+        }
+        return processPayment(membership, 0, PaymentMethod.BYCASH);
+    }
+
+    public Payment processPayment(Membership membership, PaymentMethod method){
+        if (membership == null){
+            System.out.println("Membership cannot be null.");
             return null;
         }
         return processPayment(membership, 0, method);
     }
 
-
+    public 
     //search payment by id
     @Override
     public Payment searchById(String id) {
