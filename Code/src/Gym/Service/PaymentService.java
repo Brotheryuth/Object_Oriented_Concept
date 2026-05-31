@@ -26,7 +26,6 @@ public class PaymentService implements Searchable<Payment>,Displayable {
      * @return
      * as parameter
      */
-
     public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
 
         Payment payment = new Payment(membership,discount,paymentMethod);
@@ -42,6 +41,11 @@ public class PaymentService implements Searchable<Payment>,Displayable {
             return null;
     }
 
+    /**
+     * only take membership as an argument. normally we use this for by cash payment method. 
+     * @param membership
+     * @return
+     */
     public Payment processPayment(Membership membership){
         if (membership == null){
             System.out.println("Membership cannot be null.");
@@ -50,6 +54,12 @@ public class PaymentService implements Searchable<Payment>,Displayable {
         return processPayment(membership, 0, PaymentMethod.BYCASH);
     }
 
+    /**
+     * doesnt takes discount as argument 
+     * @param membership
+     * @param method
+     * @return
+     */
     public Payment processPayment(Membership membership, PaymentMethod method){
         if (membership == null){
             System.out.println("Membership cannot be null.");
@@ -58,7 +68,6 @@ public class PaymentService implements Searchable<Payment>,Displayable {
         return processPayment(membership, 0, method);
     }
 
-    public 
     //search payment by id
     @Override
     public Payment searchById(String id) {

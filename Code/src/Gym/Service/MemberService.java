@@ -55,8 +55,29 @@ public class MemberService implements Searchable<Member> {
             return mem;
         }
        }
+
     return null; 
     }
+    /**
+     * ALternative way to search by using phone Number
+     * @param phoneNumber
+     * @return
+     */
+    public Member searchByPhone(String phoneNumber){
+        if(memberList.isEmpty()){
+            System.out.println("No Member in the list");
+            return null;
+        }
+        for (Member member : memberList) {
+            if(member.getPhoneNumber().equalsIgnoreCase(phoneNumber)){
+                return member;
+            }
+        }
+
+        System.out.println("Member not Found");
+        return null;
+    }
+
 
    
 
