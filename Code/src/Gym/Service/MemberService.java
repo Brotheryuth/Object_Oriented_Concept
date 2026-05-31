@@ -26,8 +26,16 @@ public class MemberService implements Searchable<Member> {
         memberList.add(newMember);
         return newMember;
     }
-
-
+    /**
+     * Another way to create member when we want quick login. we would use it when we dont want much information from customer 
+     * @param name
+     * @param phoneNumber
+     * @return
+     */
+    public Member createMember(String name, String phoneNumber){
+        return createMember(name, null, 0, phoneNumber); // instead of rewrite the same code, i just chain them
+        
+    }
 
  
 
@@ -47,8 +55,31 @@ public class MemberService implements Searchable<Member> {
             return mem;
         }
        }
+
     return null; 
     }
+    /**
+     * ALternative way to search by using phone Number
+     * @param phoneNumber
+     * @return
+     */
+    public Member searchByPhone(String phoneNumber){
+        if(memberList.isEmpty()){
+            System.out.println("No Member in the list");
+            return null;
+        }
+        for (Member member : memberList) {
+            if(member.getPhoneNumber().equalsIgnoreCase(phoneNumber)){
+                return member;
+            }
+        }
+
+        System.out.println("Member not Found");
+        return null;
+    }
+
+
+   
 
     /**
      *list all member and membership by storing data in array list of displayable 

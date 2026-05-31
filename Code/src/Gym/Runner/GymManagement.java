@@ -2,6 +2,7 @@ package Gym.Runner;
 
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
+import Gym.Entities.Payment;
 import Gym.Enum.Gender;
 import Gym.Enum.PaymentMethod;
 import Gym.Model.Admin;
@@ -35,9 +36,10 @@ public class GymManagement {
     /**
      * array of plan
      */
-    private MembershipPlan[] plans = {
+    private final MembershipPlan[] plans = {
             new MembershipPlan("Basic", 19.99, 1),
-            new MembershipPlan("Premium", 39.99, 3),
+            new MembershipPlan("Premium", 29.99, 3),
+            new MembershipPlan("Silver", 39.99, 6),
             new MembershipPlan("Annual", 59.99, 12)
     };
 
@@ -45,7 +47,7 @@ public class GymManagement {
     public GymManagement() {
         memberService = new MemberService();
         membershipService = new MembershipService();
-        paymentService = new PaymentService();
+        paymentService = new PaymentService(membershipService);
         // initialize staffs list before using it
         staffs = new ArrayList<>();
         Admin currenStaff = new Admin("Yuth", 19, Gender.MALE, "Manager", 500.0, "87654321");
@@ -54,13 +56,32 @@ public class GymManagement {
 
     }
 
-    public void run() {
+    public void run(Scanner input) {
+        int op;
+        do {
+            // main menu
+            System.out.println("=====================");
+            System.out.println("1. Login");
+            System.out.println("2. Exits");
+            System.out.print("Enter your Choice             :");
+            op = input.nextInt();
+            input.nextLine();
+            switch (op) {
+                case 1:
+                    System.out.println("========Login========");
+                    switchLogin(input);
+                    System.out.println("=====================");
+
+            }
+        } while (op != 2);
+        System.out.println("Thank you for using our service!");
+        input.close();
     }
 
     /**
      * login user by role
+     * * @param name
      * 
-     * @param name
      * @param password
      */
 
@@ -69,7 +90,8 @@ public class GymManagement {
         for (Staff staff : staffs) {
             if (staff.equals(temp)) {
                 loginStaff = staff;
-                System.out.println("Login Successful:" + staff.getName());
+                System.out.println(
+                        "====Login successful by====\nName:" + staff.getName() + "\nRole:" + whosLogin(loginStaff));
                 return;
             }
         }
@@ -87,8 +109,51 @@ public class GymManagement {
 
     }
 
-    public void addCashier(String name, int age, Gender gender,String phoneNumber, Double salary, String shift, String password){
-        if( loginStaff !=null || loginStaff.can(ADD_CASHIER)){
+    /**
+     * a helper function to identify who's login
+     * * @param staff
+     * 
+     * @return
+     */
+    public String whosLogin(Staff staff) {
+        if (isAdmin(staff)) {
+            return "Admin";
+        } else if (isCashier(staff)) {
+            return "Cashier";
+        } else {
+            return "Unknown";
+        }
+    }
+
+    /**
+     * A boolean to check whether the obj is instance of admin or not
+     * * @param staff
+     * 
+     * @return true if it's admi
+     */
+    boolean isAdmin(Staff staff) {
+        if (staff instanceof Admin) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * a boolean to check whether the obj is a cashier or not
+     * * @param staff
+     * 
+     * @return true if that's a cahsier
+     */
+    boolean isCashier(Staff staff) {
+        if (staff instanceof Cashier) {
+            return true;
+        }
+        return false;
+    }
+
+    public void addCashier(String name, int age, Gender gender, String phoneNumber, Double salary, String shift,
+            String password) {
+        if (loginStaff != null && loginStaff.can(ADD_CASHIER)) {
             Cashier cashier = new Cashier(name, age, gender, phoneNumber, salary, shift, password);
             staffs.add(cashier);
             System.out.println("Cashier addded successful");
@@ -113,95 +178,82 @@ public class GymManagement {
             staff.displayInfo();
         }
     }
+
+    /**
+     * if staff is authorized navigate to this function and perform another switch
+     * * @param input
+     */
+    public void staffOption(Scanner input) {
+        int op;
+        do {
+            System.out.println("=====================");
+            System.out.println("1.Add Cashier.");
+            System.out.println("2.Log out.");
+            System.out.println("0.Exit.");
+            op = input.nextInt();
+            input.nextLine();
+            switch (op) {
+                case 1:
+                    this.addCashier("kiko", 19, Gender.FEMALE, "0987654321", 250.0, "Morning", "12345678");
+                    break;
+                case 2:
+                    System.out.println(whosLogin(loginStaff) + "\t log out!");
+                    loginStaff = null;
+                    return;
+                case 0:
+                    System.out.println("||||||||||||||||||||");
+                    this.loginStaff = null;
+                    break;
+                default:
+                    System.out.println("Invalide Output!");
+                    break;
+            }
+        } while (op != 0);
+
+    }
+
+    public void switchLogin(Scanner input) {
+        System.out.print("Enter Name          :");
+        String name = input.nextLine();
+        System.out.print("Enter Password      :");
+        String password = input.nextLine();
+        login(name, password);
+
+        if (this.loginStaff != null) {
+            // if is a staff, go to staff option
+            staffOption(input);
+            return;
+        }
+        return;
+    }
+
+    /**
+     * Create membership by using memmberID since it useful since if member already exist and we wanna input via console 
+     * @param memberId
+     * @param planId
+     * @return
+     */
+    public Membership createMembership(String memberId, String planId) {
+        // find member first
+        Member member = memberService.searchById(memberId);
+        if (member == null) {
+            System.out.println("Member not found: " + memberId);
+            return null;
+        }
+
+        MembershipPlan selectedPlan = null;
+
+        for (MembershipPlan plan : plans) {
+            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
+                selectedPlan = plan;
+                break;
+            }
+        }
+        if (selectedPlan == null) {
+            System.out.println("Plan not found: " + planId);
+            return null;
+        }
+        // calling main method
+        return membershipService.creatMembership(member, selectedPlan);
+    }
 }
-// public void run() {
-// int choice = -1;
-// System.out.println("Welcome To " + gymName);
-// do {
-// System.out.println(
-// """
-// \tMain Menu
-// 1.Manager Members
-// 2.Manage Payment
-// 0.Exit!
-// """);
-// System.out.print("Enter Choice : ");
-// choice = input.nextInt();
-// input.nextLine();
-// switch (choice) {
-// case 1 -> memberMenu();
-// case 2 -> paymentMenu();
-// case 0 -> System.out.println("Good Luck");
-
-// }
-// } while (choice != 0);
-// }
-
-// private void memberMenu() {
-// int choice = -1;
-// do {
-// System.out.println("""
-// \n====== MEMBER MENU ======
-// 1. Add Member
-// 2.Add Membership
-// 2. View All Members
-// 0. Back
-// =========================""");
-// System.out.print("Enter choice: ");
-// choice = input.nextInt();
-// input.nextLine();
-// switch (choice) {
-// case 1 -> {
-// Member m = memberService.createMember(input);
-// memberService.addMember(m);
-// }
-// case 2 -> {
-
-// }
-// case 3 -> {
-// memberService.listAll();
-// }
-// case 0 -> System.out.println("Back...");
-// default -> System.out.println("Invalid choice.");
-// }
-// } while (choice != 0);
-// } // end member menu
-
-// private void paymentMenu() {
-// int choice = -1;
-// do {
-// System.out.println("""
-// \n====== PAYMENT MENU ======
-// 1. Process Payment
-// 2. View All Payments
-// 0. Back
-// ==========================""");
-// System.out.print("Enter choice: ");
-// choice = input.nextInt();
-// input.nextLine();
-
-// switch (choice) {
-// case 1 -> {
-// System.out.print("Enter Member ID: ");
-// // Members m = memberService.findByID(input.nextLine());
-// Membership m = membershipService.findByID(input.nextLine());
-// if (m == null) {
-// System.out.println("Member not found.");
-// break;
-// }
-// System.out.print("Enter Discount (0 for none): ");
-// float discount = input.nextFloat();
-// input.nextLine();
-// System.out.print("Enter Payment Method (KHQR/BYCASH/CREDITCARD): ");
-// PaymentMethod method = PaymentMethod.valueOf(input.nextLine().toUpperCase());
-// System.out.println("Pay according to your plan:");double
-// payAmount=input.nextDouble();
-// input.nextLine();
-// paymentService.processPayment(m, discount, method, payAmount );
-// }
-// case 2 -> paymentService.listAll();
-// case 0 -> System.out.println("Back...");
-// default -> System.out.println("Invalid choice.");
-// }
-// } while (choice != 0);
-// }

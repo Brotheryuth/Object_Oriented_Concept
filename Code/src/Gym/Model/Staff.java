@@ -36,7 +36,7 @@ public class Staff extends Person implements Role  {
      */
    
     public Staff(String name, String password){
-        super(name, 0, null, "");
+        super(name, 20, Gender.OTHER, "0987654321");
         this.setPassword(password);
     }
 
@@ -103,22 +103,13 @@ public class Staff extends Person implements Role  {
     @Override
     public String toString() {
         return String.format("""
-                ----------------------------------
-                        STAFF INFORMATION
-                ----------------------------------
-                ID              : %s
-                Name            : %s
-                Age             : %d
-                Gender          : %s
-                Phone Number    : %s
+                %s
                 Salary          : $%.2f
-                ----------------------------------
-                """, this.ID,
-                super.getName(),
-                super.getAge(),
-                super.getGender(),
-                super.getPhoneNumber(),
-                this.salary);
+                Hire Date       : %s
+                """,
+                super.toString().stripTrailing(),
+                this.salary,this.hirDate
+            );
     }
     /**
      * Authenticated 

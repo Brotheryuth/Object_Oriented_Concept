@@ -18,8 +18,9 @@ public class Member extends Person {
     // constructor
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
-        super.ID = "MEM-" + (++count);
         memberships =  new ArrayList<>();
+        super.ID = "MEM-" + (++count);
+        this.memberStatus=MemberStatus.INACTIVE;
     }
 
     // setter
@@ -43,8 +44,14 @@ public class Member extends Person {
         this.memberStatus = memberStatus;
     }
 
+    public MemberStatus getMemberStatus(){
+        return memberStatus;
+    }
 
-
+    /**
+     * if member already create membership 
+     * @param membership
+     */
     public void addMembership(Membership membership){
         if( membership !=null || !memberships.contains(membership)){
             memberships.add(membership);
@@ -55,6 +62,7 @@ public class Member extends Person {
         }
        
     }
+
 
     /**
      * Display all membership 
@@ -84,16 +92,11 @@ public class Member extends Person {
                 ----------------------------------
                         Member INFORMATION
                 ----------------------------------
-                ID              : %s
-                Name            : %s
-                Age             : %d
-                Gender          : %s
-                Phone Number    : %s
+                %s
+                Member Status   : %s
                 %n""",
-                super.getID(),
-                super.getName(),
-                super.getAge(),
-                super.getGender(),
-                super.getPhoneNumber());
+                super.toString().stripTrailing(),
+                this.getMemberStatus()
+            );
     }
 }

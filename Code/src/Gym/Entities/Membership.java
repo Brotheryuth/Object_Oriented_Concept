@@ -1,6 +1,7 @@
 package Gym.Entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import Gym.Enum.MemberStatus;
 import Gym.Enum.MembershipStatus;
@@ -16,6 +17,8 @@ public class Membership implements Displayable, StatusManageable {
   private LocalDateTime endDate;
   private MembershipStatus status;
   private MembershipPlan plan;
+
+  private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyy hh:mm a");
 
   // constructor
   public Membership(Member member, MembershipPlan plan) {
@@ -72,6 +75,17 @@ public class Membership implements Displayable, StatusManageable {
   public MembershipPlan getPlan() {
     return plan;
   }
+  /**
+   * formate date to look like this 06/12/2026 10:10
+   * @param formatDate
+   * @return
+   */
+  public String cleanDateFormat ( LocalDateTime formatDate){
+    if(formatDate!=null){
+      return formatDate.format(cleanDate);
+    }
+    return null;
+  }
 
   public Member getMember() {
     return member;
@@ -79,6 +93,13 @@ public class Membership implements Displayable, StatusManageable {
   //return membership status 
   public MembershipStatus getMembershipStatus(){
     return this.status;
+  }
+
+  public LocalDateTime setStartDate(LocalDateTime startDate){
+    if(startDate!=null){
+      return this.startDate=startDate;
+    }
+    return LocalDateTime.now();
   }
 
 
@@ -139,8 +160,8 @@ public class Membership implements Displayable, StatusManageable {
         End Date        : %s
         Status          : %s
         ----------------------------------
-        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(), startDate,
-        endDate, status);
+        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(), cleanDateFormat(startDate),
+        cleanDateFormat(endDate), status);
   }
-
+  
 }

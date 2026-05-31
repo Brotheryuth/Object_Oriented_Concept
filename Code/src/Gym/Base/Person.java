@@ -80,12 +80,13 @@ public  class Person implements Displayable{
     public String toString() {
         return String.format(
                 """
-                Name            :%s
-                Age             :%d
-                Gender          :%s
-                Phone Number    :%s
+                ID              : %s
+                Name            : %s
+                Age             : %d
+                Gender          : %s
+                Phone Number    : %s
                 """,
-                getName(), getAge(), getGender(), getPhoneNumber()
+                this.ID,getName(), getAge(), getGender(), getPhoneNumber()
         );
     }
 
