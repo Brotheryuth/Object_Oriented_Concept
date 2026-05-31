@@ -33,12 +33,9 @@ public class MemberService implements Searchable<Member> {
      * @return
      */
     public Member createMember(String name, String phoneNumber){
-        Member newMember = new Member(name, null, 0, phoneNumber);
-        memberList.add(newMember);
-        return newMember;
+        return createMember(name, null, 0, phoneNumber); // instead of rewrite the same code, i just chain them
+        
     }
-
-
 
  
 
@@ -60,6 +57,8 @@ public class MemberService implements Searchable<Member> {
        }
     return null; 
     }
+
+   
 
     /**
      *list all member and membership by storing data in array list of displayable 

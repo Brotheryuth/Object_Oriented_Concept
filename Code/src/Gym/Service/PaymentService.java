@@ -12,6 +12,20 @@ import java.util.ArrayList;
 
 public class PaymentService implements Searchable<Payment>,Displayable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
+    private MembershipService membershipService;
+
+    public PaymentService(MembershipService membershipService){
+        this.membershipService = membershipService;
+    }
+
+    /**
+     * a method do perform paymennt which take these
+     * @param membership
+     * @param discount
+     * @param paymentMethod
+     * @return
+     * as parameter
+     */
 
     public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
 

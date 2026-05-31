@@ -13,7 +13,7 @@ public class Cashier extends Staff {
 
         super(name, age, gender, phoneNumber, salary,password);
 
-        super.ID = "CA" + (++count);
+        super.ID = "CA-" + (++count);
 
         this.setShift(shift);
     }
@@ -58,20 +58,13 @@ public class Cashier extends Staff {
             ----------------------------------
                   CASHIER INFORMATION
             ----------------------------------
-            Role            : %s
-            Salary          : $%.2f
+            %s
+            Role            : Cashier
             Shift           : %s
-            Gender          : %s
-            Phone Number    : %s
-            Hire Date       : %s
             ----------------------------------
             """,
-            "Cashier",
-            super.getSalary(),
-            this.shift,
-            super.getGender(),
-            super.getPhoneNumber(),
-            super.getHirDate()
+            super.toString().stripTrailing(),
+            this.shift
         );
 
     }

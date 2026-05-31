@@ -30,22 +30,13 @@ public class Admin extends Staff {
         ----------------------------------
                 ADMIN INFORMATION
         ----------------------------------
-        ID              : %s
-        Name            : %s
-        Age             : %d
-        Gender          : %s
-        Phone Number    : %s
+        %s
         Role            : Admin
         Salary          : %s
         Hire Date       : %s
-
         ----------------------------------
         %n""",
-        super.getID(),
-        super.getName(),
-        super.getAge(),
-        super.getGender(),
-        super.getPhoneNumber(),
+        super.toString().stripTrailing(),
         super.getSalary(),
         super.getHirDate());
   }
