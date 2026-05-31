@@ -86,6 +86,28 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         }
         return null;
     }
+    /**
+     * Search membership by 
+     * @param member
+     * @return
+     */
+    public Membership searchByMember(Member member){
+        if(member==null){
+            System.out.println("Member Cannot be null");
+            return null;
+        }
+        for (Membership membership : membershipsList) {
+            if(membership.getMember().getID().equals(member.getID())) // compare ID with ID which i think more accurate than pure object
+                {
+                System.out.println("Search Found");
+                return membership;
+            }
+        } // end forloop 
+        System.out.println("No Member is Found!");
+        return null;
+
+    }
+
     @Override
     public void displayInfo() {
         System.out.printf("There are %s in the list",membershipsList.size());
