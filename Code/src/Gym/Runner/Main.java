@@ -19,6 +19,8 @@ import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
 import Gym.Enum.Gender;
 import Gym.Enum.PaymentMethod;
+import Gym.Model.Admin;
+import Gym.Model.Cashier;
 import Gym.Model.Member;
 import Gym.Model.Staff;
 import Gym.Service.MemberService;
@@ -31,17 +33,15 @@ public class Main {
                 Scanner input = new Scanner(System.in);   
                 MembershipService membershipService = new MembershipService();
                 MemberService memberService = new MemberService();
-                PaymentService paymentService = new PaymentService();
+                PaymentService paymentService = new PaymentService(membershipService);
 
                 GymManagement gymManagement=new GymManagement();
-                Member th= memberService.createMember("OKay", "094354");
-                memberService.displayAllMember();
-                // Member th= new Member("null", Gender.FEMALE, 20, "098765432");
-                Membership memo= membershipService.creatMembership(th, gymManagement.getPlan()[1],LocalDateTime.now().plusDays(10));
-                membershipService.displayAllMemberships();
-                paymentService.processPayment(memo, 0, PaymentMethod.BYCASH);
-                memberService.displayAllMember();
-                paymentService.listAll();
+
+                Staff cashier= new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
+                cashier.displayInfo();
+
+                Admin admin = new Admin("admin", 20, Gender.MALE, "0987654321", 22000, "admin");
+                admin.displayInfo();
 
                
                 //test work 

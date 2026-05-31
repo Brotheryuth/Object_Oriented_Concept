@@ -12,6 +12,20 @@ import java.util.ArrayList;
 
 public class PaymentService implements Searchable<Payment>,Displayable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
+    private MembershipService membershipService;
+
+    public PaymentService(MembershipService membershipService){
+        this.membershipService = membershipService;
+    }
+
+    /**
+     * a method do perform paymennt which take these
+     * @param membership
+     * @param discount
+     * @param paymentMethod
+     * @return
+     * as parameter
+     */
 
     public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
 
@@ -27,6 +41,22 @@ public class PaymentService implements Searchable<Payment>,Displayable {
             System.out.println("Paymennt failed");
             return null;
     }
+    /**
+     *  if membership already exist in the system and they wanna renew it 
+     * @param membershipID
+     * @param discount
+     * @param method
+     * @return
+     */
+    public Payment processPayment(String membershipID, double discount, PaymentMethod method) {
+        Membership membership = membershipService.searchById(membershipID);
+        if (membership == null) {
+            System.out.println("Membership not found" + membershipID);
+            return null;
+        }
+        return processPayment(membership, 0, method);
+    }
+
 
     //search payment by id
     @Override

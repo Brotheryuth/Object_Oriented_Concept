@@ -2,6 +2,7 @@ package Gym.Runner;
 
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
+import Gym.Entities.Payment;
 import Gym.Enum.Gender;
 import Gym.Enum.PaymentMethod;
 import Gym.Model.Admin;
@@ -35,7 +36,7 @@ public class GymManagement {
     /**
      * array of plan
      */
-    private  final MembershipPlan[] plans = {
+    private final MembershipPlan[] plans = {
             new MembershipPlan("Basic", 19.99, 1),
             new MembershipPlan("Premium", 29.99, 3),
             new MembershipPlan("Silver", 39.99, 6),
@@ -46,7 +47,7 @@ public class GymManagement {
     public GymManagement() {
         memberService = new MemberService();
         membershipService = new MembershipService();
-        paymentService = new PaymentService();
+        paymentService = new PaymentService(membershipService);
         // initialize staffs list before using it
         staffs = new ArrayList<>();
         Admin currenStaff = new Admin("Yuth", 19, Gender.MALE, "Manager", 500.0, "87654321");
@@ -80,6 +81,7 @@ public class GymManagement {
     /**
      * login user by role
      * * @param name
+     * 
      * @param password
      */
 
@@ -104,12 +106,13 @@ public class GymManagement {
             System.out.println("Access denied!");
             return;
         }
-        
+
     }
 
     /**
      * a helper function to identify who's login
      * * @param staff
+     * 
      * @return
      */
     public String whosLogin(Staff staff) {
@@ -125,6 +128,7 @@ public class GymManagement {
     /**
      * A boolean to check whether the obj is instance of admin or not
      * * @param staff
+     * 
      * @return true if it's admi
      */
     boolean isAdmin(Staff staff) {
@@ -137,6 +141,7 @@ public class GymManagement {
     /**
      * a boolean to check whether the obj is a cashier or not
      * * @param staff
+     * 
      * @return true if that's a cahsier
      */
     boolean isCashier(Staff staff) {
@@ -192,7 +197,7 @@ public class GymManagement {
                     this.addCashier("kiko", 19, Gender.FEMALE, "0987654321", 250.0, "Morning", "12345678");
                     break;
                 case 2:
-                    System.out.println(whosLogin(loginStaff)+"\t log out!");
+                    System.out.println(whosLogin(loginStaff) + "\t log out!");
                     loginStaff = null;
                     return;
                 case 0:
@@ -220,5 +225,35 @@ public class GymManagement {
             return;
         }
         return;
+    }
+
+    /**
+     * Create membership by using memmberID since it useful since if member already exist and we wanna input via console 
+     * @param memberId
+     * @param planId
+     * @return
+     */
+    public Membership createMembership(String memberId, String planId) {
+        // find member first
+        Member member = memberService.searchById(memberId);
+        if (member == null) {
+            System.out.println("Member not found: " + memberId);
+            return null;
+        }
+
+        MembershipPlan selectedPlan = null;
+
+        for (MembershipPlan plan : plans) {
+            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
+                selectedPlan = plan;
+                break;
+            }
+        }
+        if (selectedPlan == null) {
+            System.out.println("Plan not found: " + planId);
+            return null;
+        }
+        // calling main method
+        return membershipService.creatMembership(member, selectedPlan);
     }
 }

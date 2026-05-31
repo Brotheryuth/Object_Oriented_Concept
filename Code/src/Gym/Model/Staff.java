@@ -103,15 +103,13 @@ public class Staff extends Person implements Role  {
     @Override
     public String toString() {
         return String.format("""
-                ----------------------------------
-                        STAFF INFORMATION
-                ----------------------------------
                 %s
                 Salary          : $%.2f
-                ----------------------------------
+                Hire Date       : %s
                 """,
                 super.toString().stripTrailing(),
-                this.salary);
+                this.salary,this.hirDate
+            );
     }
     /**
      * Authenticated 
