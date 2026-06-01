@@ -12,9 +12,12 @@ import Gym.Model.Member;
 
 public class MembershipService implements Displayable, Searchable<Membership> {
     private ArrayList<Membership> membershipsList;
+    private MemberService memberService;
 
-    public MembershipService() {
+    public MembershipService(MemberService memberService) {
         this.membershipsList = new ArrayList<>();
+        this.memberService=memberService;
+
 
     }
 
@@ -58,6 +61,37 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         membershipsList.add(newMembership);
         return newMembership;
     }
+    
+    /**
+     * Create membership by using memmberID since it useful since if member already exist and we wanna input via console 
+     * @param memberId
+     * @param planId
+     * @return
+     */
+    public Membership createMembership(String memberId, String planId) {
+        // find member first
+        Member member = memberService.searchById(memberId);
+        if (member == null) {
+            System.out.println("Member not found: " + memberId);
+            return null;
+        }
+
+        MembershipPlan selectedPlan = null;
+
+        for (MembershipPlan plan : plans) {
+            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
+                selectedPlan = plan;
+                break;
+            }
+        }
+        if (selectedPlan == null) {
+            System.out.println("Plan not found: " + planId);
+            return null;
+        }
+        // calling main method
+        return creatMembership(member, selectedPlan);
+    }
+
     // display all member
     public void displayAllMemberships() {
         System.out.println("\n========== All Memberships ==========");

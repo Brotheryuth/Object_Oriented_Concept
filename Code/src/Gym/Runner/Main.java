@@ -31,8 +31,8 @@ public class Main {
 
         public static void main(String[] args) {
                 Scanner input = new Scanner(System.in);   
-                MembershipService membershipService = new MembershipService();
                 MemberService memberService = new MemberService();
+                MembershipService membershipService = new MembershipService(memberService);
                 PaymentService paymentService = new PaymentService(membershipService);
 
                 GymManagement gymManagement=new GymManagement();

@@ -46,7 +46,7 @@ public class GymManagement {
     // constructor
     public GymManagement() {
         memberService = new MemberService();
-        membershipService = new MembershipService();
+        membershipService = new MembershipService(memberService);
         paymentService = new PaymentService(membershipService);
         // initialize staffs list before using it
         staffs = new ArrayList<>();
@@ -113,7 +113,7 @@ public class GymManagement {
      * a helper function to identify who's login
      * * @param staff
      * 
-     * @return
+     * @return  
      */
     public String whosLogin(Staff staff) {
         if (isAdmin(staff)) {
@@ -227,33 +227,5 @@ public class GymManagement {
         return;
     }
 
-    /**
-     * Create membership by using memmberID since it useful since if member already exist and we wanna input via console 
-     * @param memberId
-     * @param planId
-     * @return
-     */
-    public Membership createMembership(String memberId, String planId) {
-        // find member first
-        Member member = memberService.searchById(memberId);
-        if (member == null) {
-            System.out.println("Member not found: " + memberId);
-            return null;
-        }
-
-        MembershipPlan selectedPlan = null;
-
-        for (MembershipPlan plan : plans) {
-            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
-                selectedPlan = plan;
-                break;
-            }
-        }
-        if (selectedPlan == null) {
-            System.out.println("Plan not found: " + planId);
-            return null;
-        }
-        // calling main method
-        return membershipService.creatMembership(member, selectedPlan);
-    }
+    
 }
