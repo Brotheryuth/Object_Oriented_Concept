@@ -36,12 +36,7 @@ public class GymManagement {
     /**
      * array of plan
      */
-    private final MembershipPlan[] plans = {
-            new MembershipPlan("Basic", 19.99, 1),
-            new MembershipPlan("Premium", 29.99, 3),
-            new MembershipPlan("Silver", 39.99, 6),
-            new MembershipPlan("Annual", 59.99, 12)
-    };
+
 
     // constructor
     public GymManagement() {
@@ -162,9 +157,7 @@ public class GymManagement {
         System.out.println("YOU DONT HAVE PERMISSION TO ADD CASHIER");
     }
 
-    public MembershipPlan[] getPlan() {
-        return plans;
-    }
+
 
     /**
      * list all staff

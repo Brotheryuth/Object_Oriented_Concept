@@ -37,13 +37,21 @@ public class Main {
 
                 GymManagement gymManagement=new GymManagement();
 
-                Staff cashier= new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
-                cashier.displayInfo();
-
-                Admin admin = new Admin("admin", 20, Gender.MALE, "0987654321", 22000, "admin");
-                admin.displayInfo();
-
+                Member mm = memberService.createMember("yuth","0987654321"); 
                
+                Membership membership = membershipService.createMembership( mm, membershipService.getPlans()[0]);
+
+                System.out.println(membershipService.searchByMember(mm));
+                
+                gymManagement.run(input);
+
+                // Staff cashier= new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
+                // cashier.displayInfo();
+
+                // Admin admin = new Admin("admin", 20, Gender.MALE, "0987654321", 22000, "admin");
+                // admin.displayInfo();
+
+               input.close();
                 //test work 
                 // new GymManagement().run(input);               
 

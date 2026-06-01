@@ -14,6 +14,13 @@ public class MembershipService implements Displayable, Searchable<Membership> {
     private ArrayList<Membership> membershipsList;
     private MemberService memberService;
 
+        private final MembershipPlan[] plans = {
+            new MembershipPlan("Basic", 19.99, 1),
+            new MembershipPlan("Premium", 29.99, 3),
+            new MembershipPlan("Silver", 39.99, 6),
+            new MembershipPlan("Annual", 59.99, 12)
+    };
+
     public MembershipService(MemberService memberService) {
         this.membershipsList = new ArrayList<>();
         this.memberService=memberService;
@@ -21,7 +28,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
 
     }
 
-    public Membership creatMembership(Member member, MembershipPlan plan ){
+    public Membership createMembership(Member member, MembershipPlan plan ){
         if( member ==null){
             System.out.println("Cannot create membership without a Member.");
             return null;
@@ -43,7 +50,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
      * @param startDate
      * @return
      */
-    public Membership creatMembership(Member member , MembershipPlan plan, LocalDateTime startDate ){
+    public Membership createMembership(Member member , MembershipPlan plan, LocalDateTime startDate ){
         if(member ==null){
             System.out.println("Cannot create membership without member.");
             return null;
@@ -89,7 +96,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
             return null;
         }
         // calling main method
-        return creatMembership(member, selectedPlan);
+        return createMembership(member, selectedPlan);
     }
 
     // display all member
@@ -145,5 +152,13 @@ public class MembershipService implements Displayable, Searchable<Membership> {
     @Override
     public void displayInfo() {
         System.out.printf("There are %s in the list",membershipsList.size());
+    }
+
+    /**
+     * Allow other class to use plan 
+     * @return matched plan 
+     */
+    public MembershipPlan[] getPlans(){
+        return plans;
     }
 }
