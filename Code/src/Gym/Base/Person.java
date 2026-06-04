@@ -23,7 +23,7 @@ public  class Person implements Displayable{
     protected void setName(String name) {
         if (name == null || name.isBlank()) {
             System.out.println("Invalid name. Setting default name: 'Unknown'");
-            this.name = "Unknown";
+            this.name = "Unknown "+count;
             return;
         }
         this.name = name;

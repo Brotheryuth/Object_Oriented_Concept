@@ -21,9 +21,10 @@ public class GymManagement {
      * options
      */
     public static final String ADD_CASHIER = "ADD CASHIER";
-    public static final String VIEW_MEMBER = "view member";
-    public static final String PROCESS_PAYMENT = "process payment";
-    public static final String ADD_STAFF = "add staff";
+    public static final String VIEW_MEMBER = "VIEW MEMBER";
+    public static final String ADD_MEMBER  = "ADD MEMBER";
+    public static final String PROCESS_PAYMENT = "PROCESS PAYMENT";
+    public static final String ADD_STAFF = "ADD STAFF";
 
     public static final String gymName = "SEBA-FITNESS";
     private MemberService memberService;
