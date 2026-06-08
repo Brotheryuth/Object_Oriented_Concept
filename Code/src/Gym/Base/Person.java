@@ -1,5 +1,7 @@
 package Gym.Base;
 
+import java.util.regex.Pattern;
+
 import Gym.Enum.Gender;
 import Gym.Interface.Displayable;
 
@@ -9,7 +11,8 @@ public  class Person implements Displayable{
     protected int age;
     protected String phoneNumber;
     private static int count=0;
-    protected  String ID;
+    private static final Pattern  PHONE_PATTERN = Pattern.compile("^\\+?[0-9\\s\\-\\(\\)]{7,15}$");
+    protected   String ID;
 
     //constructor
     public Person(String name, int age, Gender gender, String phoneNumber){
@@ -21,7 +24,7 @@ public  class Person implements Displayable{
     }
     //setter
     protected void setName(String name) {
-        if (name == null || name.isBlank()) {
+        if (name == null || name.isBlank() || name.trim().isEmpty()) {
             System.out.println("Invalid name. Setting default name: 'Unknown'");
             this.name = "Unknown "+count;
             return;
@@ -51,7 +54,17 @@ public  class Person implements Displayable{
      * set phone number by using clean text
      */
     protected void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber=cleanText(phoneNumber, "N/A");
+        if(phoneNumber ==null){
+            this.phoneNumber = "N/A";
+            return; 
+        }
+        String cleanPhone = phoneNumber.trim();
+        // check if phone number incldue invalid charate (e.g. !@#%^&(*)) set it to N/A
+        if(!PHONE_PATTERN.matcher(cleanPhone).matches()){
+            this.phoneNumber ="N/A";
+            return;
+        }
+        this.phoneNumber=cleanPhone;
     }
     //Getter
     public String getName()       { return name; }
@@ -61,16 +74,6 @@ public  class Person implements Displayable{
     public String getID(){
         return this.ID;
     }
-    /**
-     * @param value a string text that we want to set
-     * @param defaultValue set to default value if it's null 
-     */
-    protected String cleanText(String value, String defaultValue) {
-        if (value == null || value.trim().isEmpty())
-            return defaultValue;
-        return value.trim();
-    }
-
     @Override
     public void displayInfo() {
         System.out.println(this.toString());

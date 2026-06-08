@@ -18,7 +18,7 @@ public class Membership implements Displayable, StatusManageable {
   private MembershipStatus status;
   private MembershipPlan plan;
 
-  private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyy hh:mm a");
+  private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a");
 
   // constructor
   public Membership(Member member, MembershipPlan plan) {
@@ -54,7 +54,6 @@ public class Membership implements Displayable, StatusManageable {
   public String getSubcriptionID() {
     return this.membershipId;
   }
-  
 
   public String getMembershipId() {
     return membershipId;
@@ -75,13 +74,15 @@ public class Membership implements Displayable, StatusManageable {
   public MembershipPlan getPlan() {
     return plan;
   }
+
   /**
    * formate date to look like this 06/12/2026 10:10
+   * 
    * @param formatDate
    * @return
    */
-  public String cleanDateFormat ( LocalDateTime formatDate){
-    if(formatDate!=null){
+  public String cleanDateFormat(LocalDateTime formatDate) {
+    if (formatDate != null) {
       return formatDate.format(cleanDate);
     }
     return null;
@@ -90,22 +91,23 @@ public class Membership implements Displayable, StatusManageable {
   public Member getMember() {
     return member;
   }
-  //return membership status 
-  public MembershipStatus getMembershipStatus(){
+
+  // return membership status
+  public MembershipStatus getMembershipStatus() {
     return this.status;
   }
 
-  public LocalDateTime setStartDate(LocalDateTime startDate){
-    if(startDate!=null){
-      return this.startDate=startDate;
+  public void setStartDate(LocalDateTime startDate) {
+    if (startDate == null) {
+      this.startDate = LocalDateTime.now();
     }
-    return LocalDateTime.now();
+    this.startDate = startDate;
+    this.endDate = startDate.plusMonths(plan.getDuration());
   }
-
 
   @Override
   public String getStatus() {
-      return status.toString();
+    return status.toString();
   }
 
   @Override
@@ -114,7 +116,7 @@ public class Membership implements Displayable, StatusManageable {
       System.out.println("Membership status cannot be empty.");
       return false;
     }
-//
+    //
     try {
       MembershipStatus newStatus = MembershipStatus.valueOf(statusText.trim().toUpperCase());
       this.status = newStatus;
@@ -160,8 +162,9 @@ public class Membership implements Displayable, StatusManageable {
         End Date        : %s
         Status          : %s
         ----------------------------------
-        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(), cleanDateFormat(startDate),
+        """, membershipId, this.member.getID(), this.member.getName(), plan.getName(), plan.getPlanPrice(),
+        cleanDateFormat(startDate),
         cleanDateFormat(endDate), status);
   }
-  
+
 }
