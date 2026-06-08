@@ -3,6 +3,8 @@ package Gym.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import Gym.Entities.Membership;
 import Gym.Entities.MembershipPlan;
@@ -13,21 +15,31 @@ import Gym.Model.Member;
 public class MembershipService implements Displayable, Searchable<Membership> {
     private ArrayList<Membership> membershipsList;
     private MemberService memberService;
-
-        private final MembershipPlan[] plans = {
-            new MembershipPlan("Basic", 19.99, 1),
-            new MembershipPlan("Premium", 29.99, 3),
-            new MembershipPlan("Silver", 39.99, 6),
-            new MembershipPlan("Annual", 59.99, 12)
-    };
+    
+    private final List<MembershipPlan> planList;
+    // list provide the method get(index) to get the specific index that we want 
 
     public MembershipService(MemberService memberService) {
         this.membershipsList = new ArrayList<>();
-        this.memberService=memberService;
+        List<MembershipPlan> plan = new ArrayList<>();
+        plan.add(new MembershipPlan("Basic", 19.99, 1));
+        plan.add(new MembershipPlan("Premium", 29.99, 3));
+        plan.add(new MembershipPlan("Silver", 39.99, 6));
+        plan.add(new MembershipPlan("Annual", 59.99, 12));
+
+        this.planList = Collections.unmodifiableList(plan);
+
+         this.memberService=memberService;
 
 
     }
 
+    /**
+     * Starting today
+     * @param member
+     * @param plan
+     * @return created membership
+     */
     public Membership createMembership(Member member, MembershipPlan plan ){
         if( member ==null){
             System.out.println("Cannot create membership without a Member.");
@@ -59,6 +71,10 @@ public class MembershipService implements Displayable, Searchable<Membership> {
             System.out.println("Cannot create Membership without a plan");
             return null;
         }
+        if(startDate ==null){
+            System.out.println("Start Date cannot be null");
+            return null;
+        }
         if(startDate.isBefore(LocalDateTime.now())){
             System.out.println("Invalid Start date: Date cannot be in the past");
             return null;
@@ -66,6 +82,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         Membership newMembership = new Membership(member, plan);
         newMembership.setStartDate(startDate);
         membershipsList.add(newMembership);
+        member.addMembership(newMembership); //add to membership history 
         return newMembership;
     }
     
@@ -85,7 +102,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
 
         MembershipPlan selectedPlan = null;
 
-        for (MembershipPlan plan : plans) {
+        for (MembershipPlan plan : planList) {
             if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
                 selectedPlan = plan;
                 break;
@@ -97,6 +114,10 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         }
         // calling main method
         return createMembership(member, selectedPlan);
+    }
+
+    public List<MembershipPlan> getPlans(){
+        return planList;
     }
 
     // display all member
@@ -154,11 +175,5 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         System.out.printf("There are %s in the list",membershipsList.size());
     }
 
-    /**
-     * Allow other class to use plan 
-     * @return matched plan 
-     */
-    public MembershipPlan[] getPlans(){
-        return plans;
-    }
+
 }

@@ -55,7 +55,7 @@ public class Staff extends Person implements Role  {
         return ID;
     }
     protected void setSalary(Double salary) {
-        if (salary > 0)
+        if (salary !=null && salary > 0)
             this.salary = salary;
         else
             this.salary = 0.0;
@@ -70,7 +70,7 @@ public class Staff extends Person implements Role  {
     }
 
     public void setPassword(String password){
-        if (password.isBlank()|| password.isEmpty()) {
+        if (password==null|| password.isBlank()|| password.trim().isEmpty()) {
             System.out.println("Password is Null. set to 87654321 as default");
             this.password="87654321";
             return;

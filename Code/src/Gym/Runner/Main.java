@@ -39,7 +39,7 @@ public class Main {
 
                 Member mm = memberService.createMember("yuth","0987654321"); 
                
-                Membership membership = membershipService.createMembership( mm, membershipService.getPlans()[0]);
+                Membership membership = membershipService.createMembership( mm, membershipService.getPlans().get(0));
                 paymentService.processPayment(membership);
                 paymentService.listAll();
 
