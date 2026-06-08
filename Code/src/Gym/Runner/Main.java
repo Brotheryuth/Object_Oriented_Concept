@@ -40,10 +40,12 @@ public class Main {
                 Member mm = memberService.createMember("yuth","0987654321"); 
                
                 Membership membership = membershipService.createMembership( mm, membershipService.getPlans()[0]);
+                paymentService.processPayment(membership);
+                paymentService.listAll();
 
                 System.out.println(membershipService.searchByMember(mm));
                 
-                gymManagement.run(input);
+                // gymManagement.run(input);
 
                 // Staff cashier= new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
                 // cashier.displayInfo();

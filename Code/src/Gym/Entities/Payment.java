@@ -9,44 +9,51 @@ import Gym.Interface.Displayable;
 import Gym.Interface.Payable;
 
 public class Payment implements Displayable, Payable {
-    private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyy hh:mm a");
+    private static final DateTimeFormatter cleanDate = DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a");
     private static int count = 0;
     private double payAmount; // base amount
     private String paymentID; //
     private float discount; // if there's a discount
-    private String subcriptionID;
+    private final String subcriptionID;
     private LocalDateTime paymentDate;
     private PaymentMethod method; // in what method ? KHQR ? credit card?
     private double finalAmount;
     private double amount;
     private Membership membership;
-    private LocalDateTime createAt;
+    private final LocalDateTime createAt;
 
-    //for payment status
+    // for payment status
     public static final String PAID = "PAID";
-    public static final String FAILED="FAILED";
-    public static final String PENDING="PENDING";
+    public static final String FAILED = "FAILED";
+    public static final String PENDING = "PENDING";
     private PaymentStatus paymentStatus;
 
+    public Payment(Membership memShip, float discount, PaymentMethod method) {
+        this.paymentID = "PM-" + (++count);
 
-    
-
-    public Payment( Membership memShip, float discount , PaymentMethod method){
-        this.paymentID="PM-"+(++count);
-        this.membership=memShip;
-        this.subcriptionID= memShip.getSubcriptionID();
+        this.setMembership(memShip);
+        this.subcriptionID = memShip.getSubcriptionID();
         this.setDiscount(discount);
         this.setMethod(method);
-        this.paymentDate=LocalDateTime.now();
-        this.payAmount=memShip.getPlan().getPlanPrice();
-        this.finalAmount= calculateFinalAmount();
-        paymentStatus= PaymentStatus.PENDING;
-        this.createAt=LocalDateTime.now();
+        this.paymentDate = LocalDateTime.now();
+        this.payAmount = memShip.calculateFee();
+        this.finalAmount = calculateFinalAmount();
+        paymentStatus = PaymentStatus.PENDING;
+        this.createAt = LocalDateTime.now();
     }
 
     // accessor
+    private void setMembership(Membership membership) {
+        if (membership == null) {
+            System.out.println("Membership cannot be null");
+            return;
+        }
+        this.membership = membership;
+
+    }
+
     public void setDiscount(float discount) {
-        if (discount >= 0)
+        if (discount >= 0 && discount <= 1)
             this.discount = discount;
         else {
             this.discount = 0;
@@ -76,62 +83,66 @@ public class Payment implements Displayable, Payable {
     public Membership getMembership() {
         return membership;
     }
-     
-    public PaymentStatus getPaymentStatus(){
+
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
-   
-    //set method 
-    private void setMethod(PaymentMethod method){
-        if (method ==null) {
+
+    // set method
+    private void setMethod(PaymentMethod method) {
+        if (method == null) {
             System.out.println("Method cannot be null! it will be set to BY CASH as default");
-            this.method=PaymentMethod.BYCASH;
+            this.method = PaymentMethod.BYCASH;
+            return;
         }
-        this.method=method;
+        this.method = method;
     }
+
     public double calculateFinalAmount() {
+        double discountBase = payAmount * (1 - discount);
         return switch (method) {
-            case KHQR -> payAmount * (1 - discount);
-            case BYCASH -> payAmount * (1 - discount);
-            case CREDITCARD -> payAmount * (1 - discount) * 1.05;
+            case KHQR -> discountBase;
+            case BYCASH -> discountBase;
+            case CREDITCARD -> discountBase * 1.05;
         };
     }
 
     @Override
     public boolean pay() {
-        if(membership == null){
+        if (membership == null) {
             System.out.println("Payment failed no membership connect");
-            paymentStatus = PaymentStatus.FAILED;     
+            paymentStatus = PaymentStatus.FAILED;
             return false;
         }
-        amount = membership.calculateFee();
-        finalAmount = amount - discount;
-        if(finalAmount <= 0 ){
+
+        finalAmount = calculateFinalAmount();
+        if (finalAmount <= 0) {
             System.out.println("Payment failed: final amount must be greater than 0.");
             paymentStatus = PaymentStatus.FAILED;
-        }   
-        //activate membership 
+        }
+        // activate membership
         boolean activated = membership.activate();
-         if (!activated) {
+        if (!activated) {
             System.out.println("Payment failed: menbership cannot be activated.");
             paymentStatus = PaymentStatus.FAILED;
             return false;
-         }
-         paymentStatus = PaymentStatus.PAID;
-         return true;
-     }
-
-     @Override
-     public boolean isPaid() {
-        return paymentStatus == PaymentStatus.PAID; // if theyre the same return true ( paid=paid)
-     }
-
-    public String cleanDateFormat ( LocalDateTime formatDate){
-    if(formatDate!=null){
-      return formatDate.format(cleanDate);
+        }
+        this.paymentDate = LocalDateTime.now();
+        paymentStatus = PaymentStatus.PAID;
+        return true;
     }
-    return null;
-  }
+
+    @Override
+    public boolean isPaid() {
+        return paymentStatus == PaymentStatus.PAID; // if theyre the same return true ( paid=paid)
+    }
+
+    public String cleanDateFormat(LocalDateTime formatDate) {
+        if (formatDate != null) {
+            return formatDate.format(cleanDate);
+        }
+        return null;
+    }
 
     @Override
     public void displayInfo() {
@@ -150,8 +161,17 @@ public class Payment implements Displayable, Payable {
                 Final Amount    :$%.2f
                 Paymentstatus   : %s
                 Create At       : %s
-                """.formatted(paymentID, subcriptionID, membership.getMember().getID(),
-                membership.getMember().getName(), discount * 100, method.name(), finalAmount, paymentStatus,this.cleanDateFormat(createAt))
-                ;
+                Payment Date    : %s
+                """.formatted(
+                    paymentID, 
+                    subcriptionID, 
+                    membership.getMember().getID(),
+                    membership.getMember().getName(),
+                    discount * 100,
+                    method.name(),
+                    finalAmount, 
+                    paymentStatus,  
+                    this.cleanDateFormat(createAt), 
+                    this.cleanDateFormat(paymentDate));
     }
 }

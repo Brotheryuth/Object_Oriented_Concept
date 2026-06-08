@@ -85,8 +85,7 @@ public class PaymentService implements Searchable<Payment>,Displayable {
 
     @Override
     public void displayInfo() {
-        System.out.println("Payment service store #"+paymentList.size()+" Payment");
-        
+        listAll();
     }
 
     public void listAll() {
