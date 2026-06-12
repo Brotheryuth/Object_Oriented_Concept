@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import Gym.Enum.Gender;
 import Gym.Interface.Displayable;
 
-public  class Person implements Displayable{
+public abstract  class Person implements Displayable{
     protected String name;
     protected Gender gender;
     protected int age;

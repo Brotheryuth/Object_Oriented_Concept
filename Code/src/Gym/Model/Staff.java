@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import Gym.Base.Person;
 
-public class Staff extends Person implements Role  {
+public abstract class Staff extends Person implements Role  {
     private static int count = 0;
     private LocalDate hirDate;
     private Double salary;
@@ -118,4 +118,8 @@ public class Staff extends Person implements Role  {
     public boolean can(String action) {
         return false;
     }
+    /**
+     * an abstract method for work . different staff work differently 
+     */
+    public abstract void work(String Action);
 }

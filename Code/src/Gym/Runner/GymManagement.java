@@ -81,18 +81,18 @@ public class GymManagement {
      * @param password
      */
 
-    public void login(String name, String password) {
-        Staff temp = new Staff(name, password);
-        for (Staff staff : staffs) {
-            if (staff.equals(temp)) {
-                loginStaff = staff;
-                System.out.println(
-                        "====Login successful by====\nName:" + staff.getName() + "\nRole:" + whosLogin(loginStaff));
-                return;
-            }
-        }
-        System.out.println("Login failed");
-    }
+    // public void login(String name, String password) {
+    //     Staff temp = new Staff(name, password);
+    //     for (Staff staff : staffs) {
+    //         if (staff.equals(temp)) {
+    //             loginStaff = staff;
+    //             System.out.println(
+    //                     "====Login successful by====\nName:" + staff.getName() + "\nRole:" + whosLogin(loginStaff));
+    //             return;
+    //         }
+    //     }
+    //     System.out.println("Login failed");
+    // }
 
     /**
      * Add member
@@ -211,7 +211,7 @@ public class GymManagement {
         String name = input.nextLine();
         System.out.print("Enter Password      :");
         String password = input.nextLine();
-        login(name, password);
+        // login(name, password);
 
         if (this.loginStaff != null) {
             // if is a staff, go to staff option

@@ -31,6 +31,7 @@ public class Cashier extends Staff {
     @Override
     public boolean can(String action) {
         if(action.equals(GymManagement.PROCESS_PAYMENT)){
+            work(action);
             return true;
         }
         return false;
@@ -67,6 +68,13 @@ public class Cashier extends Staff {
             this.shift
         );
 
+    }
+
+    @Override
+    public void work(String Action) {
+
+       System.out.printf("%s Working on %s\n",super.getName(),Action);
+        
     }
     
 }

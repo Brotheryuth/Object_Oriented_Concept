@@ -1,6 +1,7 @@
 package Gym.Model;
 
 import Gym.Enum.Gender;
+import Gym.Runner.GymManagement;
 
 public class Admin extends Staff {
   private static int count =0;
@@ -16,6 +17,7 @@ public class Admin extends Staff {
 
   @Override
   public boolean can(String action) {
+      work(action);
       return true;
   }
 
@@ -40,4 +42,10 @@ public class Admin extends Staff {
         super.getSalary(),
         super.getHirDate());
   }
+
+  @Override
+  public void work(String Action) {
+    System.out.printf("Admin is Working on %s\n",Action );
+  }
+
 }

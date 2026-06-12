@@ -21,6 +21,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
 
     public MembershipService(MemberService memberService) {
         this.membershipsList = new ArrayList<>();
+
         List<MembershipPlan> plan = new ArrayList<>();
         plan.add(new MembershipPlan("Basic", 19.99, 1));
         plan.add(new MembershipPlan("Premium", 29.99, 3));
@@ -30,8 +31,6 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         this.planList = Collections.unmodifiableList(plan);
 
          this.memberService=memberService;
-
-
     }
 
     /**
