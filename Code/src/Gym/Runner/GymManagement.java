@@ -228,7 +228,9 @@ public class GymManagement {
     }
 
     /**
-     * Create membership by using memmberID since it useful since if member already exist and we wanna input via console 
+     * Create membership by using memmberID since it useful since if member already
+     * exist and we wanna input via console
+     * 
      * @param memberId
      * @param planId
      * @return

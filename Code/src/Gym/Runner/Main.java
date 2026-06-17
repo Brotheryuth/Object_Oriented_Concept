@@ -30,23 +30,22 @@ import Gym.Service.PaymentService;
 public class Main {
 
         public static void main(String[] args) {
-                Scanner input = new Scanner(System.in);   
+                Scanner input = new Scanner(System.in);
                 MembershipService membershipService = new MembershipService();
                 MemberService memberService = new MemberService();
                 PaymentService paymentService = new PaymentService(membershipService);
 
-                GymManagement gymManagement=new GymManagement();
+                GymManagement gymManagement = new GymManagement();
 
-                Staff cashier= new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
+                Staff cashier = new Cashier("nika", 20, Gender.FEMALE, "098765432", 1200.0, "Night", "YYYY");
                 cashier.displayInfo();
 
                 Admin admin = new Admin("admin", 20, Gender.MALE, "0987654321", 22000, "admin");
                 admin.displayInfo();
 
-               
-                //test work 
-                // new GymManagement().run(input);               
+                // test work
+                // new GymManagement().run(input);
 
-        } // end main 
+        } // end main
 
 }

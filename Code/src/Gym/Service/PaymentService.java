@@ -10,44 +10,47 @@ import Gym.Interface.Searchable;
 
 import java.util.ArrayList;
 
-public class PaymentService implements Searchable<Payment>,Displayable {
+public class PaymentService implements Searchable<Payment>, Displayable {
     private ArrayList<Payment> paymentList = new ArrayList<>();
     private MembershipService membershipService;
 
-    public PaymentService(MembershipService membershipService){
+    public PaymentService(MembershipService membershipService) {
         this.membershipService = membershipService;
     }
 
     /**
      * a method do perform paymennt which take these
+     * 
      * @param membership
      * @param discount
      * @param paymentMethod
      * @return
-     * as parameter
+     *         as parameter
      */
-    public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod ){
+    public Payment processPayment(Membership membership, float discount, PaymentMethod paymentMethod) {
 
-        Payment payment = new Payment(membership,discount,paymentMethod);
-        
+        Payment payment = new Payment(membership, discount, paymentMethod);
+
         boolean paid = payment.pay();
-        //check if it's paid 
-        if(paid){
+        // check if it's paid
+        if (paid) {
             paymentList.add(payment);
             System.out.println("Payment successful");
             return payment;
         }
-            System.out.println("Paymennt failed");
-            return null;
+        System.out.println("Paymennt failed");
+        return null;
     }
 
     /**
-     * only take membership as an argument. normally we use this for by cash payment method. 
+     * only take membership as an argument. normally we use this for by cash payment
+     * method.
+     * 
      * @param membership
      * @return
      */
-    public Payment processPayment(Membership membership){
-        if (membership == null){
+    public Payment processPayment(Membership membership) {
+        if (membership == null) {
             System.out.println("Membership cannot be null.");
             return null;
         }
@@ -55,28 +58,29 @@ public class PaymentService implements Searchable<Payment>,Displayable {
     }
 
     /**
-     * doesnt takes discount as argument 
+     * doesnt takes discount as argument
+     * 
      * @param membership
      * @param method
      * @return
      */
-    public Payment processPayment(Membership membership, PaymentMethod method){
-        if (membership == null){
+    public Payment processPayment(Membership membership, PaymentMethod method) {
+        if (membership == null) {
             System.out.println("Membership cannot be null.");
             return null;
         }
         return processPayment(membership, 0, method);
     }
 
-    //search payment by id
+    // search payment by id
     @Override
     public Payment searchById(String id) {
-        if(paymentList.isEmpty()){
+        if (paymentList.isEmpty()) {
             System.out.println("The payment list is empty!");
             return null;
         }
         for (Payment payment : paymentList) {
-            if(payment.getPaymentID().equalsIgnoreCase(id)){
+            if (payment.getPaymentID().equalsIgnoreCase(id)) {
                 return payment;
             }
         }
@@ -85,8 +89,8 @@ public class PaymentService implements Searchable<Payment>,Displayable {
 
     @Override
     public void displayInfo() {
-        System.out.println("Payment service store #"+paymentList.size()+" Payment");
-        
+        System.out.println("Payment service store #" + paymentList.size() + " Payment");
+
     }
 
     public void listAll() {
