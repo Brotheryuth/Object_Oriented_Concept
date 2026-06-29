@@ -71,9 +71,7 @@ public abstract class Staff extends Person implements Role  {
 
     public void setPassword(String password){
         if (password==null|| password.isBlank()|| password.trim().isEmpty()) {
-            System.out.println("Password is Null. set to 87654321 as default");
-            this.password="87654321";
-            return;
+            throw new IllegalArgumentException("Password is Null.");
         }
         this.password=password;
     }

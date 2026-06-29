@@ -95,8 +95,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
         // find member first
         Member member = memberService.searchById(memberId);
         if (member == null) {
-            System.out.println("Member not found: " + memberId);
-            return null;
+           throw new  IllegalArgumentException("Member not found: " + memberId);
         }
 
         MembershipPlan selectedPlan = null;
@@ -108,8 +107,7 @@ public class MembershipService implements Displayable, Searchable<Membership> {
             }
         }
         if (selectedPlan == null) {
-            System.out.println("Plan not found: " + planId);
-            return null;
+            throw new IllegalArgumentException("Plan not found: " + planId);
         }
         // calling main method
         return createMembership(member, selectedPlan);

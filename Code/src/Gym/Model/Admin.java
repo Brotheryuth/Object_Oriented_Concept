@@ -1,7 +1,6 @@
 package Gym.Model;
 
 import Gym.Enum.Gender;
-import Gym.Runner.GymManagement;
 
 public class Admin extends Staff {
   private static int count =0;
