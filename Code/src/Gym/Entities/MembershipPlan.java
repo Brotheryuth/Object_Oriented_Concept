@@ -15,20 +15,17 @@ public MembershipPlan(String planName, double planPrice, int duration) {
     this.plan_ID = "PL-" + (++count);
     
     if (planName == null || planName.isBlank()) {
-        System.out.println("Plan name cannot be null. Setting to UNKNOWN.");
-        this.planName = "UNKNOWN";
+       throw new IllegalArgumentException("Plan name cannot be null."); 
     } else {
         this.planName = planName;
     }
     if (planPrice < 0) {
-        System.out.println("Plan price cannot be negative. Setting to 0.0.");
-        this.planPrice = 0.0;
+        throw new IllegalArgumentException("Plan price cannot be negative.");
     } else {
         this.planPrice = planPrice;
     }
     if (duration <= 0) {
-        System.out.println("Plan duration must be at least 1 month. Setting to 1.");
-        this.duration = 1;
+        throw new IllegalArgumentException("Plan duration must be at least 1 month.");
     } else {
         this.duration = duration;
     }

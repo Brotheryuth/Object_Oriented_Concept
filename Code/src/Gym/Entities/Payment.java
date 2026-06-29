@@ -45,8 +45,7 @@ public class Payment implements Displayable, Payable {
     // accessor
     private void setMembership(Membership membership) {
         if (membership == null) {
-            System.out.println("Membership cannot be null");
-            return;
+            throw new IllegalArgumentException("Membership cannot be null");
         }
         this.membership = membership;
 
@@ -91,9 +90,7 @@ public class Payment implements Displayable, Payable {
     // set method
     private void setMethod(PaymentMethod method) {
         if (method == null) {
-            System.out.println("Method cannot be null! it will be set to BY CASH as default");
-            this.method = PaymentMethod.BYCASH;
-            return;
+            throw new IllegalArgumentException("Method cannot be null! it will be set to BY CASH as default");
         }
         this.method = method;
     }
@@ -110,22 +107,20 @@ public class Payment implements Displayable, Payable {
     @Override
     public boolean pay() {
         if (membership == null) {
-            System.out.println("Payment failed no membership connect");
             paymentStatus = PaymentStatus.FAILED;
-            return false;
+            throw new IllegalArgumentException("Payment failed no membership connect");
         }
 
         finalAmount = calculateFinalAmount();
         if (finalAmount <= 0) {
-            System.out.println("Payment failed: final amount must be greater than 0.");
             paymentStatus = PaymentStatus.FAILED;
+            throw new IllegalArgumentException("Payment failed: final amount must be greater than 0.");
         }
         // activate membership
         boolean activated = membership.activate();
         if (!activated) {
-            System.out.println("Payment failed: menbership cannot be activated.");
             paymentStatus = PaymentStatus.FAILED;
-            return false;
+            throw new IllegalArgumentException("Payment failed: menbership cannot be activated.");
         }
         this.paymentDate = LocalDateTime.now();
         paymentStatus = PaymentStatus.PAID;
