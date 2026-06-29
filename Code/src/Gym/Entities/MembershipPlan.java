@@ -4,42 +4,34 @@ package Gym.Entities;
 
 import Gym.Interface.Displayable;
 public class MembershipPlan implements Displayable{
-    private  static int count =0;
-    private  String planName;
-    private  String plan_ID;
-    private double planPrice;
-    private int duration;
+    private   static int count =0;
+    private final String planName;
+    private final String plan_ID;
+    private final double planPrice;
+    private final int duration;
 // constructor
-    public MembershipPlan(String planName , double planPrice , int duration  ){
-        this.plan_ID ="PL-"+(++count);
-        this.setPlanName(planName);
-        this.setPlanPrice(planPrice);
-        this.setDuration(duration);
+
+public MembershipPlan(String planName, double planPrice, int duration) {
+    this.plan_ID = "PL-" + (++count);
+    
+    if (planName == null || planName.isBlank()) {
+       throw new IllegalArgumentException("Plan name cannot be null."); 
+    } else {
+        this.planName = planName;
     }
+    if (planPrice < 0) {
+        throw new IllegalArgumentException("Plan price cannot be negative.");
+    } else {
+        this.planPrice = planPrice;
+    }
+    if (duration <= 0) {
+        throw new IllegalArgumentException("Plan duration must be at least 1 month.");
+    } else {
+        this.duration = duration;
+    }
+}
     // accessor
-    public void setPlanPrice(Double planPrice){
-        if(planPrice > 0 ){
-            this.planPrice=planPrice;
-        }
-    }
-    public void setPlanName( String planName){
-        if(planName.isBlank()||planName.isEmpty()){
-            System.out.println("Plan name cannot be null.");
-            this.planName="UNKNOWN";
-            return;
-        }
-        this.planName= planName;
-
-    }
-    public void setDuration( int duration){
-        if(duration>0){
-            this.duration=duration;
-            return;
-        }
-        System.out.println("Invalid duration");
-    }
-
-
+    
     public  String getName(){
         return planName;
     }

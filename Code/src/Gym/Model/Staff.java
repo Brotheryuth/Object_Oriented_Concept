@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import Gym.Base.Person;
 
-public class Staff extends Person implements Role  {
+public abstract class Staff extends Person implements Role  {
     private static int count = 0;
     private LocalDate hirDate;
     private Double salary;
@@ -55,7 +55,7 @@ public class Staff extends Person implements Role  {
         return ID;
     }
     protected void setSalary(Double salary) {
-        if (salary > 0)
+        if (salary !=null && salary > 0)
             this.salary = salary;
         else
             this.salary = 0.0;
@@ -70,10 +70,8 @@ public class Staff extends Person implements Role  {
     }
 
     public void setPassword(String password){
-        if (password.isBlank()|| password.isEmpty()) {
-            System.out.println("Password is Null. set to 87654321 as default");
-            this.password="87654321";
-            return;
+        if (password==null|| password.isBlank()|| password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password is Null.");
         }
         this.password=password;
     }
@@ -118,4 +116,8 @@ public class Staff extends Person implements Role  {
     public boolean can(String action) {
         return false;
     }
+    /**
+     * an abstract method for work . different staff work differently 
+     */
+    public abstract void work(String Action);
 }

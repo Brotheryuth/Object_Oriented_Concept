@@ -16,6 +16,7 @@ public class Admin extends Staff {
 
   @Override
   public boolean can(String action) {
+      work(action);
       return true;
   }
 
@@ -40,4 +41,10 @@ public class Admin extends Staff {
         super.getSalary(),
         super.getHirDate());
   }
+
+  @Override
+  public void work(String Action) {
+    System.out.printf("Admin is Working on %s\n",Action );
+  }
+
 }

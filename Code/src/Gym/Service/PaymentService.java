@@ -49,10 +49,9 @@ public class PaymentService implements Searchable<Payment>, Displayable {
      * @param membership
      * @return
      */
-    public Payment processPayment(Membership membership) {
-        if (membership == null) {
-            System.out.println("Membership cannot be null.");
-            return null;
+    public Payment processPayment(Membership membership){
+        if (membership == null){
+            throw new IllegalArgumentException("Membership cannot be null.");
         }
         return processPayment(membership, 0, PaymentMethod.BYCASH);
     }
@@ -64,10 +63,9 @@ public class PaymentService implements Searchable<Payment>, Displayable {
      * @param method
      * @return
      */
-    public Payment processPayment(Membership membership, PaymentMethod method) {
-        if (membership == null) {
-            System.out.println("Membership cannot be null.");
-            return null;
+    public Payment processPayment(Membership membership, PaymentMethod method){
+        if (membership == null){
+            throw new IllegalArgumentException("Membership cannot be null.");
         }
         return processPayment(membership, 0, method);
     }
@@ -89,8 +87,7 @@ public class PaymentService implements Searchable<Payment>, Displayable {
 
     @Override
     public void displayInfo() {
-        System.out.println("Payment service store #" + paymentList.size() + " Payment");
-
+        listAll();
     }
 
     public void listAll() {

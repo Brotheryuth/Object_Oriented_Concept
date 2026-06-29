@@ -21,9 +21,10 @@ public class GymManagement {
      * options
      */
     public static final String ADD_CASHIER = "ADD CASHIER";
-    public static final String VIEW_MEMBER = "view member";
-    public static final String PROCESS_PAYMENT = "process payment";
-    public static final String ADD_STAFF = "add staff";
+    public static final String VIEW_MEMBER = "VIEW MEMBER";
+    public static final String ADD_MEMBER  = "ADD MEMBER";
+    public static final String PROCESS_PAYMENT = "PROCESS PAYMENT";
+    public static final String ADD_STAFF = "ADD STAFF";
 
     public static final String gymName = "SEBA-FITNESS";
     private MemberService memberService;
@@ -36,17 +37,12 @@ public class GymManagement {
     /**
      * array of plan
      */
-    private final MembershipPlan[] plans = {
-            new MembershipPlan("Basic", 19.99, 1),
-            new MembershipPlan("Premium", 29.99, 3),
-            new MembershipPlan("Silver", 39.99, 6),
-            new MembershipPlan("Annual", 59.99, 12)
-    };
+
 
     // constructor
     public GymManagement() {
         memberService = new MemberService();
-        membershipService = new MembershipService();
+        membershipService = new MembershipService(memberService);
         paymentService = new PaymentService(membershipService);
         // initialize staffs list before using it
         staffs = new ArrayList<>();
@@ -85,18 +81,18 @@ public class GymManagement {
      * @param password
      */
 
-    public void login(String name, String password) {
-        Staff temp = new Staff(name, password);
-        for (Staff staff : staffs) {
-            if (staff.equals(temp)) {
-                loginStaff = staff;
-                System.out.println(
-                        "====Login successful by====\nName:" + staff.getName() + "\nRole:" + whosLogin(loginStaff));
-                return;
-            }
-        }
-        System.out.println("Login failed");
-    }
+    // public void login(String name, String password) {
+    //     Staff temp = new Staff(name, password);
+    //     for (Staff staff : staffs) {
+    //         if (staff.equals(temp)) {
+    //             loginStaff = staff;
+    //             System.out.println(
+    //                     "====Login successful by====\nName:" + staff.getName() + "\nRole:" + whosLogin(loginStaff));
+    //             return;
+    //         }
+    //     }
+    //     System.out.println("Login failed");
+    // }
 
     /**
      * Add member
@@ -113,7 +109,7 @@ public class GymManagement {
      * a helper function to identify who's login
      * * @param staff
      * 
-     * @return
+     * @return  
      */
     public String whosLogin(Staff staff) {
         if (isAdmin(staff)) {
@@ -162,9 +158,7 @@ public class GymManagement {
         System.out.println("YOU DONT HAVE PERMISSION TO ADD CASHIER");
     }
 
-    public MembershipPlan[] getPlan() {
-        return plans;
-    }
+
 
     /**
      * list all staff
@@ -217,7 +211,7 @@ public class GymManagement {
         String name = input.nextLine();
         System.out.print("Enter Password      :");
         String password = input.nextLine();
-        login(name, password);
+        // login(name, password);
 
         if (this.loginStaff != null) {
             // if is a staff, go to staff option
@@ -227,35 +221,5 @@ public class GymManagement {
         return;
     }
 
-    /**
-     * Create membership by using memmberID since it useful since if member already
-     * exist and we wanna input via console
-     * 
-     * @param memberId
-     * @param planId
-     * @return
-     */
-    public Membership createMembership(String memberId, String planId) {
-        // find member first
-        Member member = memberService.searchById(memberId);
-        if (member == null) {
-            System.out.println("Member not found: " + memberId);
-            return null;
-        }
-
-        MembershipPlan selectedPlan = null;
-
-        for (MembershipPlan plan : plans) {
-            if (plan.getPlan_ID().equalsIgnoreCase(planId)) {
-                selectedPlan = plan;
-                break;
-            }
-        }
-        if (selectedPlan == null) {
-            System.out.println("Plan not found: " + planId);
-            return null;
-        }
-        // calling main method
-        return membershipService.creatMembership(member, selectedPlan);
-    }
+    
 }

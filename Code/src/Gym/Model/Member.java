@@ -3,6 +3,9 @@ package Gym.Model;
 import Gym.Enum.Gender;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import Gym.Base.Person;
 import Gym.Entities.Membership;
@@ -10,7 +13,7 @@ import Gym.Enum.MemberStatus;
 import Gym.Enum.MembershipStatus;
 
 public class Member extends Person {
-    private ArrayList<Membership> memberships;
+    private List<Membership> memberships;
     private MemberStatus memberStatus;
 
     private static int count = 0;
@@ -18,7 +21,7 @@ public class Member extends Person {
     // constructor
     public Member(String name, Gender gender, int age, String phoneNumber) {
         super(name, age, gender, phoneNumber);
-        memberships =  new ArrayList<>();
+        this.memberships = new ArrayList<>();
         super.ID = "MEM-" + (++count);
         this.memberStatus=MemberStatus.INACTIVE;
     }
@@ -47,13 +50,22 @@ public class Member extends Person {
     public MemberStatus getMemberStatus(){
         return memberStatus;
     }
+    /**
+     * 
+     * @return read only data
+     */
+    public List<Membership> getMemberships(){
+        return Collections.unmodifiableList(memberships);
+    }
+
+
 
     /**
      * if member already create membership 
      * @param membership
      */
     public void addMembership(Membership membership){
-        if( membership !=null || !memberships.contains(membership)){
+        if( membership !=null &&  !memberships.contains(membership)){
             memberships.add(membership);
          
             if(membership.getMembershipStatus() == MembershipStatus.ACTIVE){
@@ -68,7 +80,7 @@ public class Member extends Person {
      * Display all membership 
      */
     public void displayMembershipHistory() {
-        System.out.println("\nMembership History for " + name + ":");
+        System.out.println("\nMembership History for " + getName() + ":");
 
         if (memberships.isEmpty()) {
             System.out.println("No membership records yet.");
