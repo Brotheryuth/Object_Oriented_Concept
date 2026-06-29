@@ -51,6 +51,6 @@ public class Main {
                 //test work 
                 // new GymManagement().run(input);               
 
-        } // end main 
+        } // end main
 
 }
