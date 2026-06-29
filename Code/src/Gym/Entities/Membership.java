@@ -36,12 +36,10 @@ public class Membership implements Displayable, StatusManageable {
    */
   public boolean activate() {
     if (member == null) {
-      System.out.println("Membership cannot be activated with a member.");
-      return false;
+     throw new IllegalArgumentException("Membership cannot be activated with a member.");
     }
     if (plan == null) {
-      System.out.println("Membership cannot be activated without a plan.");
-      return false;
+     throw new IllegalArgumentException("Membership cannot be activated without a plan.");
     }
     status = MembershipStatus.ACTIVE;
     member.setMemberStatus(MemberStatus.ACTIVE);
@@ -113,8 +111,7 @@ public class Membership implements Displayable, StatusManageable {
   @Override
   public boolean updateStatus(String statusText) {
     if (statusText == null || statusText.trim().isEmpty()) {
-      System.out.println("Membership status cannot be empty.");
-      return false;
+      throw new IllegalArgumentException("Membership status cannot be empty.");
     }
     //
     try {
@@ -126,8 +123,7 @@ public class Membership implements Displayable, StatusManageable {
       }
       return true;
     } catch (IllegalArgumentException e) {
-      System.out.println("Invalid membership status: " + statusText);
-      return false;
+      throw new IllegalArgumentException("Invalid membership status: " + statusText);
     }
 
   }
